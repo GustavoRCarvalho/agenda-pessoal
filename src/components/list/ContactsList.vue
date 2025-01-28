@@ -1,19 +1,23 @@
 <template>
   <table>
-    <tr>
-      <th>Nome</th>
-      <th>Email</th>
-      <th>Telefone</th>
-      <th>Tipo</th>
-      <th>Ferramentas</th>
-    </tr>
-    <tr>
-      <td>Lorem Ipsum</td>
-      <td>email@email.com</td>
-      <td>(00) 00000-0000</td>
-      <td>Residencial</td>
-      <td><button>Edit</button><button>Del</button></td>
-    </tr>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Tipo</th>
+        <th>Ferramentas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Lorem Ipsum</td>
+        <td>email@email.com</td>
+        <td>(00) 00000-0000</td>
+        <td>Residencial</td>
+        <td><button>Edit</button><button>Del</button></td>
+      </tr>
+    </tbody>
   </table>
 </template>
 <!-- [
