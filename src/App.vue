@@ -1,6 +1,7 @@
 <script setup>
 import RouterNavigation from './components/RouterNavigation.vue'
 import MainContentContainer from '@/components/MainContentContainer.vue'
+import ModalsController from './router/ModalsController.vue'
 </script>
 
 <template>
@@ -11,6 +12,7 @@ import MainContentContainer from '@/components/MainContentContainer.vue'
   </header>
   <MainContentContainer>
     <RouterView />
+    <ModalsController />
   </MainContentContainer>
 </template>
 

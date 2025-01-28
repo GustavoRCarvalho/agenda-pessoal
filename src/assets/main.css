@@ -30,3 +30,7 @@ body {
     flex-direction: row;
   }
 }
+
+.modal-container {
+  background-color: white;
+}
