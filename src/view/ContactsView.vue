@@ -3,7 +3,7 @@ import ContactsList from '@/components/list/ContactsList.vue'
 </script>
 <template>
   <div class="top-wrapper">
-    Pessoas
+    Contatos
     <button>adicionar</button>
   </div>
   <input type="text" />
