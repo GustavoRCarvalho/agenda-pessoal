@@ -1,12 +1,12 @@
 <script setup>
-import ContactsList from '@/components/list/ContactsList.vue'
+import PeopleList from '@/components/people/PeopleList.vue'
 </script>
 <template>
   <div class="top-wrapper">
-    Contatos
+    Pessoas
     <button>adicionar</button>
   </div>
   <input type="text" />
-  <ContactsList />
+  <PeopleList />
 </template>
 <style scoped></style>

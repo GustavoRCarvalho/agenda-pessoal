@@ -1,12 +1,12 @@
 <script setup>
-import PeopleList from '@/components/list/PeopleList.vue'
+import UsersList from '@/components/users/UsersList.vue'
 </script>
 <template>
   <div class="top-wrapper">
-    Pessoas
+    Usuários
     <button>adicionar</button>
   </div>
   <input type="text" />
-  <PeopleList />
+  <UsersList />
 </template>
 <style scoped></style>

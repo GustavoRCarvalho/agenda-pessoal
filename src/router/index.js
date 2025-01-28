@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/view/HomeView.vue'
-import PeopleView from '@/view/PeopleView.vue'
-import UsersView from '@/view/UsersView.vue'
-import ContactsView from '@/view/ContactsView.vue'
-import LogoutView from '@/view/LogoutView.vue'
+import HomeView from '@/components/home/HomeView.vue'
+import PeopleView from '@/components/people/PeopleView.vue'
+import UsersView from '@/components/users/UsersView.vue'
+import ContactsView from '@/components/contacts/ContactsView.vue'
+import LogoutView from '@/components/LogoutView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
