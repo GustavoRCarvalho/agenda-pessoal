@@ -4,7 +4,7 @@
   </main>
 </template>
 
-<style scoped>
+<style>
 main {
   display: flex;
   flex-direction: column;
@@ -17,5 +17,10 @@ main {
 
   border: 1px solid black;
   border-radius: 0.5em;
+}
+
+.top-wrapper {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
