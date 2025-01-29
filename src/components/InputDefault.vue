@@ -12,7 +12,7 @@ const model = defineModel()
 
 const isFocus = ref(false)
 
-function changeFocus(bool) {
+function focusHasChange(bool) {
   isFocus.value = bool
 }
 </script>
@@ -26,8 +26,8 @@ function changeFocus(bool) {
       :name="name"
       :id="name"
       v-mask="mask"
-      @focusin="changeFocus(true)"
-      @focusout="changeFocus(false)"
+      @focusin="focusHasChange(true)"
+      @focusout="focusHasChange(false)"
       required
     />
     <input
@@ -36,8 +36,8 @@ function changeFocus(bool) {
       v-model="model"
       :name="name"
       :id="name"
-      @focusin="changeFocus(true)"
-      @focusout="changeFocus(false)"
+      @focusin="focusHasChange(true)"
+      @focusout="focusHasChange(false)"
       :maxlength="200"
       required
     />
@@ -51,7 +51,7 @@ div {
   margin-left: 1em;
   padding: 0.25em;
 
-  border: 1px solid gray;
+  border: 1px solid var(--color-label);
   border-radius: 0.25em;
 
   width: 14em;
@@ -84,7 +84,7 @@ label {
   font-size: 1em;
   left: 0.2em;
   top: 0.25em;
-  color: var(--content-placeholder);
+  color: var(--color-label);
   background-color: white;
   padding: 0 0.25em;
   transition: all 0.3s ease;
