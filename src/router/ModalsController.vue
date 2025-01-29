@@ -9,4 +9,5 @@ const { peopleModal } = storeToRefs(store)
 <template>
   <PeopleRegister v-show="peopleModal" />
   <!-- usar v-show caso deseje manter o estado dos componentes da dom preenchidos no caso de abrir de novo -->
+  <!-- usar v-if caso deseje destruir o estado... -->
 </template>
