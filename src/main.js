@@ -1,3 +1,4 @@
+import 'vue-select/dist/vue-select.css'
 import './assets/main.css'
 import './assets/list.css'
 import './assets/register.css'

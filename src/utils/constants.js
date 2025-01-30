@@ -11,3 +11,56 @@ export const peopleFormFields = {
   numero: '',
   pais: '',
 }
+export const contactFormFields = {
+  email: '',
+  id: 0,
+  pessoa_selected: {
+    key: 0,
+    label: '',
+  },
+  pessoa: {
+    cpf: '',
+    endereco: {
+      bairro: '',
+      cep: '',
+      cidade: '',
+      estado: '',
+      id: 0,
+      logradouro: '',
+      numero: 0,
+      pais: '',
+    },
+    foto: {
+      id: '',
+      name: '',
+      type: '',
+    },
+    id: 0,
+    nome: '',
+  },
+  privado: true,
+  tag: '',
+  telefone: '',
+  tipoContato: { key: '', label: '' },
+  usuario: {
+    cpf: '',
+    dataNascimento: '',
+    email: '',
+    id: 0,
+    nome: '',
+    password: '',
+    telefone: '',
+    username: '',
+  },
+}
+export const patterns = {
+  B: { pattern: /[1-9]/ },
+  C: { pattern: /[2-8]/ },
+  D: { pattern: /0/ },
+  '#': { pattern: /\d/ },
+  X: { pattern: /[0-9a-zA-Z]/ },
+  S: { pattern: /[a-zA-Z]/ },
+  A: { pattern: /[a-zA-Z]/, transform: (v) => v.toLocaleUpperCase() },
+  a: { pattern: /[a-zA-Z]/, transform: (v) => v.toLocaleLowerCase() },
+  '!': { escape: true },
+}

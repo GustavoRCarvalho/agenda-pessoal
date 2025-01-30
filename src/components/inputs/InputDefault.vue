@@ -43,6 +43,7 @@ function focusHasChange(bool) {
       v-model="model"
       :name="name"
       :id="name"
+      :placeholder="placeholder"
       v-mask="mask"
       @focusin="focusHasChange(true)"
       @focusout="focusHasChange(false)"
@@ -55,6 +56,7 @@ function focusHasChange(bool) {
       v-model="model"
       :name="name"
       :id="name"
+      :placeholder="placeholder"
       @focusin="focusHasChange(true)"
       @focusout="focusHasChange(false)"
       :maxlength="200"
@@ -87,6 +89,17 @@ input {
   padding: 0;
   width: 100%;
   border-radius: 0.25em;
+
+  &::placeholder {
+    color: transparent;
+
+    transition: 0.3s ease;
+  }
+  &:focus {
+    &::placeholder {
+      color: #b4b4b4;
+    }
+  }
 }
 label {
   position: absolute;

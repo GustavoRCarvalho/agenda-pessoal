@@ -1,6 +1,6 @@
 <script setup>
 import PeopleList from '@/components/people/PeopleList.vue'
-import InputDefault from '../InputDefault.vue'
+import InputDefault from '../inputs/InputDefault.vue'
 import { useModalsStore } from '@/stores/modals'
 import { ref } from 'vue'
 

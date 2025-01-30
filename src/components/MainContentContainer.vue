@@ -19,6 +19,11 @@ main {
 
   border: 1px solid var(--color-gray-border);
   border-radius: 0.5em;
+
+  @media (max-width: 720px) {
+    margin: 0;
+    padding: 0.3em;
+  }
 }
 
 .top-wrapper {

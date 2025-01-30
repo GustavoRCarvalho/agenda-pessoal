@@ -130,3 +130,15 @@
 .edit-button:hover {
   color: gray;
 }
+
+.vs__dropdown-toggle {
+  padding: 0;
+}
+
+.vs__actions {
+  padding-top: 0;
+  cursor: pointer;
+}
+.vs__search {
+  flex-grow: 0;
+}

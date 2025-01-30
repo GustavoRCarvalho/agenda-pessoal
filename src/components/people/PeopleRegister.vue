@@ -5,7 +5,7 @@ import ModalBackground from '@/router/ModalBackground.vue'
 import { reactive, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { generateUniqueId, transformImage } from '../../utils/functions'
-import InputDefault from '../InputDefault.vue'
+import InputDefault from '../inputs/InputDefault.vue'
 
 const ModalsStore = useModalsStore()
 const { peopleSwitch } = ModalsStore
