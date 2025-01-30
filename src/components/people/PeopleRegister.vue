@@ -166,6 +166,7 @@ async function handleFile(e) {
               <!-- @change="(e) => (formFields.foto = e.target.files[0])" -->
               <input
                 type="file"
+                :value="formFields.foto.data"
                 @change="handleFile"
                 accept="image/png, image/jpeg"
                 name="foto"
