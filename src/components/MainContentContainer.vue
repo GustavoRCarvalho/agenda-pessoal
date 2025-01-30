@@ -9,8 +9,10 @@ main {
   display: flex;
   flex-direction: column;
 
+  gap: 0.5em;
+
   flex: 1;
-  min-height: calc(100vh - 4em - 4px);
+  min-height: calc(50vh - 4em - 4px);
 
   margin: 1em;
   padding: 1em;
@@ -22,5 +24,10 @@ main {
 .top-wrapper {
   display: flex;
   justify-content: space-between;
+}
+.top-wrapper > h1 {
+  margin: 0;
+  font-size: 1.4em;
+  font-weight: 450;
 }
 </style>

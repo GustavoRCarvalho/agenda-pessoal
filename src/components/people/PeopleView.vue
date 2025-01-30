@@ -11,7 +11,7 @@ const search = ref('')
 </script>
 <template>
   <div class="top-wrapper">
-    Pessoas
+    <h1>Lista de Pessoas</h1>
     <button class="default-button" @click="peopleSwitch">Adicionar</button>
   </div>
   <InputDefault
