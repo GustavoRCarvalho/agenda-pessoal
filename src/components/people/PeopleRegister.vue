@@ -1,7 +1,7 @@
 <script setup>
 import { useModalsStore } from '@/stores/modals'
 import { useRegistersStore } from '@/stores/registers'
-import ModalBackground from '@/components/ModalBackground.vue'
+import ModalBackground from '@/router/ModalBackground.vue'
 import { reactive, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { generateUniqueId, transformImage } from '../utils/functions'

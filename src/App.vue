@@ -1,5 +1,5 @@
 <script setup>
-import RouterNavigation from './components/RouterNavigation.vue'
+import RouterNavigation from './router/RouterNavigation.vue'
 import MainContentContainer from '@/components/MainContentContainer.vue'
 import ModalsController from './router/ModalsController.vue'
 </script>
