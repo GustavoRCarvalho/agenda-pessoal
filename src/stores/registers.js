@@ -1,4 +1,4 @@
-import { peopleFormFields } from '@/components/utils/constants'
+import { peopleFormFields } from '@/utils/constants'
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'
 
