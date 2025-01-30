@@ -15,7 +15,7 @@ main {
   margin: 1em;
   padding: 1em;
 
-  border: 1px solid var(--color-label);
+  border: 1px solid var(--color-gray-border);
   border-radius: 0.5em;
 }
 

@@ -75,9 +75,7 @@ async function handleFile(e) {
 <template>
   <ModalBackground @closeModal="peopleSwitch">
     <div class="modal-container">
-      <div class="register-title">
-        <span>Registro de Pessoa</span>
-      </div>
+      <h2 class="register-title">Registro de Pessoa</h2>
       <form class="register-form" v-on:submit="handleSubmit" v-on:reset="handleReset">
         <div class="form-input-container">
           <span>Dados</span>
@@ -166,7 +164,6 @@ async function handleFile(e) {
               <!-- @change="(e) => (formFields.foto = e.target.files[0])" -->
               <input
                 type="file"
-                :value="formFields.foto.data"
                 @change="handleFile"
                 accept="image/png, image/jpeg"
                 name="foto"

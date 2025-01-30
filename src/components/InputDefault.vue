@@ -69,7 +69,7 @@ div {
   margin-block: 0.6em;
   padding: 0.25em;
 
-  border: 1px solid var(--color-label);
+  border: 1px solid var(--color-gray-border);
   border-radius: 0.25em;
 
   width: calc(100% - 0.5em - 2px);

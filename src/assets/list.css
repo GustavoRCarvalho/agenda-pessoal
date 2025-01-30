@@ -33,7 +33,7 @@
     aspect-ratio: 1;
   }
   tbody > tr > td {
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid var(--color-gray-border);
 
     overflow: hidden;
     white-space: nowrap;
