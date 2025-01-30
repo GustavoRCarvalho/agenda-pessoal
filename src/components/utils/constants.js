@@ -2,7 +2,7 @@ export const peopleFormFields = {
   id: 0,
   name: '',
   cpf: '',
-  foto: null,
+  foto: {},
   bairro: '',
   cep: '',
   cidade: '',

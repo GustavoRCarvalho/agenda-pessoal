@@ -12,7 +12,7 @@ const search = ref('')
 <template>
   <div class="top-wrapper">
     Pessoas
-    <button @click="peopleSwitch">adicionar</button>
+    <button class="default-button" @click="peopleSwitch">Adicionar</button>
   </div>
   <InputDefault
     v-model="search"

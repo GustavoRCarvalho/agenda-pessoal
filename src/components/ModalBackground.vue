@@ -9,18 +9,19 @@ function closeOnCheckingId(e) {
 </script>
 
 <template>
-  <div id="modal-id" class="modal-container" @click="closeOnCheckingId">
+  <div role="dialog" id="modal-id" class="modal-back" @click="closeOnCheckingId">
     <slot></slot>
   </div>
 </template>
 <style scoped>
-.modal-container {
+.modal-back {
   position: absolute;
   left: 0;
   top: 0;
 
-  width: 100dvw;
-  height: 100dvh;
+  flex: 1;
+  width: 100%;
+  height: 100%;
   background-color: #0000002f;
 }
 </style>

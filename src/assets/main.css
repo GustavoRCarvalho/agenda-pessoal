@@ -27,16 +27,10 @@ body {
   display: flex;
   flex-direction: column;
   font-weight: normal;
-}
 
-@media (min-width: 1024px) {
-  #app {
+  @media (min-width: 1024px) {
     flex-direction: row;
   }
-}
-
-.modal-container {
-  background-color: white;
 }
 
 .not-visible:not(:focus):not(:active) {
@@ -50,4 +44,21 @@ body {
 
   overflow: hidden;
   white-space: nowrap;
+}
+
+.default-button {
+  background-color: transparent;
+
+  border: 1px solid var(--color-label);
+  border-radius: 0.25em;
+
+  padding: 0.5em 1em;
+
+  font-weight: 500;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: #00000008;
+  }
 }

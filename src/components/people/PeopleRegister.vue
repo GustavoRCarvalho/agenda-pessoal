@@ -4,7 +4,7 @@ import { useRegistersStore } from '@/stores/registers'
 import ModalBackground from '@/components/ModalBackground.vue'
 import { reactive, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { generateUniqueId } from '../utils/functions'
+import { generateUniqueId, transformImage } from '../utils/functions'
 import InputDefault from '../InputDefault.vue'
 
 const ModalsStore = useModalsStore()
@@ -22,6 +22,8 @@ watch(
   () => peopleRegisterEdit.value,
   (newVal) => {
     Object.assign(formFields, newVal)
+    formFields.foto.data = {}
+    formFields.foto.src = ''
   },
 )
 
@@ -38,6 +40,8 @@ watch(
 function handleReset(e) {
   e.preventDefault()
   Object.assign(formFields, peopleRegisterEdit.value)
+  formFields.foto.data = {}
+  formFields.foto.src = ''
 }
 
 function handleSubmit(e) {
@@ -51,88 +55,132 @@ function handleSubmit(e) {
 
   console.log(formValues)
 }
+async function handleFile(e) {
+  const file = e.target.files[0]
+  if (!file || !['image/png', 'image/jpeg'].includes(file.type)) {
+    // event Error
+    console.error('Imagens devem ser no formato .PNG ou .JPEG')
+    return
+  }
+  formFields.foto.data = file
+
+  try {
+    formFields.foto.src = await transformImage(file)
+  } catch (error) {
+    // event Error
+    console.error('Erro ao processar a imagem:', error)
+  }
+}
 </script>
 <template>
   <ModalBackground @closeModal="peopleSwitch">
     <div class="modal-container">
-      <div>
-        <span>People Register</span> <button type="button" @click="peopleSwitch">close</button>
+      <div class="register-title">
+        <span>Registro de Pessoa</span>
       </div>
-      <form v-on:submit="handleSubmit" v-on:reset="handleReset">
-        <InputDefault
-          v-model="formFields.name"
-          type="text"
-          label="Nome"
-          name="name"
-          placeholder="Nome"
-        />
-        <InputDefault
-          v-model="formFields.cpf"
-          type="text"
-          label="CPF"
-          name="cpf"
-          mask="###.###.###-##"
-          placeholder="000.000.000-00"
-        />
-        <label for="foto">foto</label>
-        <input
-          type="file"
-          @change="(e) => (formFields.foto = e.target.files[0])"
-          name="foto"
-          id="foto"
-        />
-        <InputDefault
-          v-model="formFields.bairro"
-          type="text"
-          label="Bairro"
-          name="bairro"
-          placeholder="Bairro"
-        />
-        <InputDefault
-          v-model="formFields.cep"
-          type="text"
-          label="CEP"
-          name="cep"
-          mask="#####-###"
-          placeholder="00000-000"
-        />
-        <InputDefault
-          v-model="formFields.cidade"
-          type="text"
-          label="Cidade"
-          name="cidade"
-          placeholder="Cidade"
-        />
-        <InputDefault
-          v-model="formFields.estado"
-          type="text"
-          label="Estado"
-          name="estado"
-          placeholder="Estado"
-        />
-        <InputDefault
-          v-model="formFields.logradouro"
-          type="text"
-          label="Rua"
-          name="logradouro"
-          placeholder="Rua"
-        />
-        <InputDefault
-          v-model="formFields.numero"
-          type="number"
-          label="Número"
-          name="numero"
-          placeholder="000"
-        />
-        <InputDefault
-          v-model="formFields.pais"
-          type="text"
-          label="País"
-          name="pais"
-          placeholder="País"
-        />
-        <button type="reset">Limpar</button>
-        <button type="submit">Enviar</button>
+      <form class="register-form" v-on:submit="handleSubmit" v-on:reset="handleReset">
+        <div class="form-input-container">
+          <span>Dados</span>
+          <div class="form-input-wrapper">
+            <InputDefault
+              :needFocus="peopleModal"
+              v-model="formFields.name"
+              type="text"
+              label="Nome"
+              name="name"
+              placeholder="Nome"
+            />
+            <InputDefault
+              v-model="formFields.cpf"
+              type="text"
+              label="CPF"
+              name="cpf"
+              mask="###.###.###-##"
+              placeholder="000.000.000-00"
+            />
+          </div>
+        </div>
+        <div class="form-input-container">
+          <span>Endereço</span>
+          <div class="form-input-wrapper">
+            <InputDefault
+              v-model="formFields.cep"
+              type="text"
+              label="CEP"
+              name="cep"
+              mask="#####-###"
+              placeholder="00000-000"
+            />
+            <InputDefault
+              v-model="formFields.pais"
+              type="text"
+              label="País"
+              name="pais"
+              placeholder="País"
+            />
+            <InputDefault
+              v-model="formFields.estado"
+              type="text"
+              label="Estado"
+              name="estado"
+              placeholder="Estado"
+            />
+            <InputDefault
+              v-model="formFields.cidade"
+              type="text"
+              label="Cidade"
+              name="cidade"
+              placeholder="Cidade"
+            />
+            <InputDefault
+              v-model="formFields.bairro"
+              type="text"
+              label="Bairro"
+              name="bairro"
+              placeholder="Bairro"
+            />
+            <InputDefault
+              v-model="formFields.logradouro"
+              type="text"
+              label="Rua"
+              name="logradouro"
+              placeholder="Rua"
+            />
+            <InputDefault
+              v-model="formFields.numero"
+              type="number"
+              label="Número"
+              name="numero"
+              placeholder="000"
+            />
+          </div>
+        </div>
+        <div class="form-input-container">
+          <span>Foto</span>
+          <div class="form-input-wrapper">
+            <div class="form-image-wrapper">
+              <label for="foto"
+                ><span :class="formFields.foto?.src && 'not-visible'">Adicionar Foto</span
+                ><img v-if="formFields.foto?.src" :src="formFields.foto?.src" alt="Foto Escolhida"
+              /></label>
+              <!-- @change="(e) => (formFields.foto = e.target.files[0])" -->
+              <input
+                type="file"
+                @change="handleFile"
+                accept="image/png, image/jpeg"
+                name="foto"
+                id="foto"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-button-wrapper">
+          <button class="default-button" type="reset">Limpar</button>
+          <button class="default-button" type="submit">Enviar</button>
+          <button class="close-button" type="button" @click="peopleSwitch">
+            <span class="not-visible">close</span>X
+          </button>
+        </div>
       </form>
     </div>
   </ModalBackground>

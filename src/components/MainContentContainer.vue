@@ -15,7 +15,7 @@ main {
   margin: 1em;
   padding: 1em;
 
-  border: 1px solid black;
+  border: 1px solid var(--color-label);
   border-radius: 0.5em;
 }
 

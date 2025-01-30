@@ -1,7 +1,11 @@
 <script setup>
+import { watch } from 'vue'
+import { nextTick } from 'vue'
+import { useTemplateRef } from 'vue'
 import { ref } from 'vue'
 
-defineProps({
+const props = defineProps({
+  needFocus: { type: Boolean, default: false },
   type: { type: String, default: 'text' },
   label: { type: String, default: '' },
   name: { type: String, default: '' },
@@ -10,7 +14,20 @@ defineProps({
 })
 const model = defineModel()
 
-const isFocus = ref(false)
+const isFocus = ref(props.needFocus)
+const inputRef = useTemplateRef('inputRef')
+
+watch(
+  () => props.needFocus,
+  async (newValue) => {
+    if (!!inputRef.value && !newValue) {
+      return
+    }
+    // Dom update checker por que o componente não é destruido e, por tanto, não é remontado
+    await nextTick()
+    inputRef.value.focus()
+  },
+)
 
 function focusHasChange(bool) {
   isFocus.value = bool
@@ -21,6 +38,7 @@ function focusHasChange(bool) {
     <label :for="name" :class="{ active: model || isFocus }">{{ label }}</label>
     <input
       v-if="mask"
+      ref="inputRef"
       :type="type"
       v-model="model"
       :name="name"
@@ -32,6 +50,7 @@ function focusHasChange(bool) {
     />
     <input
       v-else
+      ref="inputRef"
       :type="type"
       v-model="model"
       :name="name"
@@ -47,20 +66,17 @@ function focusHasChange(bool) {
 <style scoped>
 div {
   position: relative;
-  margin-block: 1em;
-  margin-left: 1em;
+  margin-block: 0.6em;
   padding: 0.25em;
 
   border: 1px solid var(--color-label);
   border-radius: 0.25em;
 
-  width: 14em;
+  width: calc(100% - 0.5em - 2px);
+  max-width: 14em;
 
-  @media (max-width: 1024px) {
-    width: 10em;
-  }
   @media (max-width: 720px) {
-    width: 100%;
+    max-width: unset;
   }
 }
 input {
@@ -69,14 +85,7 @@ input {
   border: none;
 
   padding: 0;
-  width: 14em;
-
-  @media (max-width: 1024px) {
-    width: 10em;
-  }
-  @media (max-width: 720px) {
-    width: 100%;
-  }
+  width: 100%;
   border-radius: 0.25em;
 }
 label {

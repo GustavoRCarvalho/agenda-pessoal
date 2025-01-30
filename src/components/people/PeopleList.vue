@@ -14,10 +14,16 @@ function handleClickEdit(id) {
   peopleSwitch()
 }
 
-const peopleList = [{ id: '123456', name: 'Lorem Ipsum', src: '@/assets/logo.svg' }]
+function handleDelete(id) {
+  if (id) {
+    console.log(id)
+  }
+}
+
+const peopleList = [{ id: 123456, name: 'Lorem Ipsum', src: '@/assets/logo.svg' }]
 </script>
 <template>
-  <table>
+  <table class="list-table">
     <thead>
       <tr>
         <th></th>
@@ -28,10 +34,18 @@ const peopleList = [{ id: '123456', name: 'Lorem Ipsum', src: '@/assets/logo.svg
     <tbody>
       <tr v-for="people in peopleList" :key="people.id">
         <td>
-          <img alt="Foto da Pessoa" class="logo" src="@/assets/logo.svg" width="50" height="50" />
+          <img :alt="'Foto da ' + people.name" class="logo" src="@/assets/logo.svg" />
         </td>
         <td>{{ people.name }}</td>
-        <td><button @click="handleClickEdit(people.id)">Edit</button><button>Del</button></td>
+        <td>
+          <button class="tool-button edit-button" @click="handleClickEdit(people.id)">
+            <span class="not-visible">Editar {{ people.name }}</span
+            >E</button
+          ><button class="tool-button delete-button" @click="handleDelete(people.id)">
+            <span class="not-visible">Deletar {{ people.name }}</span
+            >D
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
