@@ -24,22 +24,33 @@ export const useRegistersStore = defineStore('registers', {
         //fetch by id
         this.contactRegisterEdit = {
           ...contactFormFields,
+          id: 2,
+          telefone: '(011) 9 9823-8765',
+          pessoa: {
+            key: 1,
+            label: 'Ipsum Lorem',
+          },
+          tipoContato: { key: 'TELEFONE', label: 'TELEFONE' },
+        }
+      } else if (id === 2) {
+        this.contactRegisterEdit = {
+          ...contactFormFields,
           id: 1,
           email: '1email@email.com',
-          pessoa_selected: {
+          pessoa: {
             key: 0,
             label: 'Lorem Ipsum',
           },
-          tipoContato: { key: 'TELEFONE', label: 'TELEFONE' },
+          tipoContato: { key: 'EMAIL', label: 'EMAIL' },
         }
       } else {
         this.contactRegisterEdit = {
           ...contactFormFields,
-          id: 2,
-          email: '2email@email.com',
-          pessoa_selected: {
+          id: 3,
+          telefone: '(22) 5 2823-1231',
+          pessoa: {
             key: 1,
-            label: 'Ipsum Lorem',
+            label: 'Lorem Lorem',
           },
           tipoContato: { key: 'CELULAR', label: 'CELULAR' },
         }

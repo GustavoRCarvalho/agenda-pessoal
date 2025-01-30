@@ -68,9 +68,9 @@ function handleSubmit(e) {
                 { key: 1, label: 'Ipsum Lorem' },
                 { key: 2, label: 'Lorem Lorem' },
               ]"
-              v-model="formFields.pessoa_selected"
+              v-model="formFields.pessoa"
               label="Selecione uma Pessoa"
-              name="pessoa_selected"
+              name="pessoa"
             />
           </div>
         </div>

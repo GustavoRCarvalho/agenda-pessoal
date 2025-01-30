@@ -14,29 +14,9 @@ export const peopleFormFields = {
 export const contactFormFields = {
   email: '',
   id: 0,
-  pessoa_selected: {
+  pessoa: {
     key: 0,
     label: '',
-  },
-  pessoa: {
-    cpf: '',
-    endereco: {
-      bairro: '',
-      cep: '',
-      cidade: '',
-      estado: '',
-      id: 0,
-      logradouro: '',
-      numero: 0,
-      pais: '',
-    },
-    foto: {
-      id: '',
-      name: '',
-      type: '',
-    },
-    id: 0,
-    nome: '',
   },
   privado: true,
   tag: '',

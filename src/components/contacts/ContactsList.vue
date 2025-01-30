@@ -30,7 +30,14 @@ const peopleList = [
   },
   {
     id: 2,
-    name: 'Lorem Ipsum',
+    name: 'Ipsum Lorem',
+    private: false,
+    tipoContato: 'EMAIL',
+    src: '@/assets/logo.svg',
+  },
+  {
+    id: 3,
+    name: 'Lorem Lorem',
     private: false,
     tipoContato: 'CELULAR',
     src: '@/assets/logo.svg',
