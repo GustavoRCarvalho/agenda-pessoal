@@ -70,14 +70,14 @@ function handleSubmit(e) {
             v-model="formFields.newPassword"
             type="password"
             label="Nova Senha"
-            name="newPassword"
+            name="new-password"
             placeholder="Nova Senha"
           />
           <InputDefault
             v-model="formFields.newPasswordConfirmation"
             type="password"
             label="Confirme a Nova Senha"
-            name="newPasswordConfirmation"
+            name="new-password"
             placeholder="Nova Senha"
           />
         </div>

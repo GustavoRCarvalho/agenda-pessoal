@@ -5,6 +5,7 @@ import { reactive, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import InputDefault from '../inputs/InputDefault.vue'
 import InputPhone from '../inputs/InputPhone.vue'
+import InputDate from '../inputs/InputDate.vue'
 
 const ModalsStore = useModalsStore()
 const { passSwitch } = ModalsStore
@@ -61,14 +62,7 @@ function handleSubmit(e) {
           mask="###.###.###-##"
           placeholder="000.000.000-00"
         />
-        <InputDefault
-          v-model="formFields.dataNascimento"
-          type="text"
-          label="Data de Nascimento"
-          name="dataNascimento"
-          mask="####.##.##"
-          placeholder="1970.01.01"
-        />
+        <InputDate v-model="formFields.dataNascimento" />
       </div>
     </div>
     <div class="form-input-container">

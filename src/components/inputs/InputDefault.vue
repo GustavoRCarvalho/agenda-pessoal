@@ -1,10 +1,12 @@
 <script setup>
+import { patterns } from '@/utils/constants'
 import { watch } from 'vue'
 import { nextTick } from 'vue'
 import { useTemplateRef } from 'vue'
 import { ref } from 'vue'
 
 const props = defineProps({
+  autoComplete: { type: String, default: '' },
   needFocus: { type: Boolean, default: false },
   type: { type: String, default: 'text' },
   label: { type: String, default: '' },
@@ -42,9 +44,12 @@ function focusHasChange(bool) {
       :type="type"
       v-model="model"
       :name="name"
-      :id="name"
       :placeholder="placeholder"
-      v-mask="mask"
+      v-mask="{
+        mask: props.mask,
+        tokens: { ...patterns },
+      }"
+      :autoComplete="autoComplete"
       @focusin="focusHasChange(true)"
       @focusout="focusHasChange(false)"
       required
@@ -55,8 +60,8 @@ function focusHasChange(bool) {
       :type="type"
       v-model="model"
       :name="name"
-      :id="name"
       :placeholder="placeholder"
+      :autoComplete="autoComplete"
       @focusin="focusHasChange(true)"
       @focusout="focusHasChange(false)"
       :maxlength="200"

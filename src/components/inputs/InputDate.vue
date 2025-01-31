@@ -1,44 +1,29 @@
 <script setup>
-import { patterns } from '@/utils/constants'
+import { gerateDateMask } from '@/utils/functions'
 import { computed } from 'vue'
 import { ref } from 'vue'
 
 const model = defineModel()
-const mask = ['(DBB) B BB##-####', '(DBB) B C###-####', '(BB) B BB##-####', '(BB) B C###-####']
-
 const isFocus = ref(false)
 
 function focusHasChange(bool) {
   isFocus.value = bool
 }
 
-//verificação de telefone
-const phoneTokens = computed(() => {
-  let useMask = ''
-
-  const phone = model.value.replace(/\D/g, '')
-
-  const regex = new RegExp(/^[2-8]/)
-  const index = phone[0] === '0' ? 4 : 3
-  useMask = regex.test(phone[index])
-    ? mask[phone[0] === '0' ? 1 : 3]
-    : mask[phone[0] === '0' ? 0 : 2]
-
-  return {
-    mask: useMask,
-    tokens: { ...patterns },
-  }
+//verificação de data
+const dateTokens = computed(() => {
+  return gerateDateMask(model.value)
 })
 </script>
 <template>
   <div>
-    <label for="phone" :class="{ active: model || isFocus }">Telefone/Celular</label>
+    <label for="phone" :class="{ active: model || isFocus }">Data de Nascimento</label>
     <input
       type="tel"
       name="phone"
-      placeholder="(99) 9 9999-9999"
+      placeholder="1970.12.31"
       v-model="model"
-      v-mask="phoneTokens"
+      v-mask="dateTokens"
       @focusin="focusHasChange(true)"
       @focusout="focusHasChange(false)"
       required
