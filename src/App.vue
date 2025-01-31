@@ -2,6 +2,15 @@
 import RouterNavigation from './router/RouterNavigation.vue'
 import MainContentContainer from '@/components/MainContentContainer.vue'
 import ModalsController from './router/ModalsController.vue'
+import { onMounted } from 'vue'
+
+import { useUserStore } from '@/stores/user'
+const UserStore = useUserStore()
+const { setUser } = UserStore
+
+onMounted(() => {
+  setUser(1)
+})
 </script>
 
 <template>

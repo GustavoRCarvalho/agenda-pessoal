@@ -173,7 +173,7 @@ async function handleFile(e) {
           </div>
         </div>
         <div class="form-button-wrapper">
-          <button class="default-button" type="reset">Limpar</button>
+          <button class="default-button" type="reset">Restaurar</button>
           <button class="default-button" type="submit">Enviar</button>
           <button class="close-button" type="button" @click="peopleSwitch">
             <span class="not-visible">close</span>X

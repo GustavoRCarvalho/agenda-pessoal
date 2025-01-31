@@ -9,6 +9,7 @@ import InputDefault from '../inputs/InputDefault.vue'
 import InputCheck from '../inputs/InputCheck.vue'
 import InputSelect from '../inputs/InputSelect.vue'
 import InputPhone from '../inputs/InputPhone.vue'
+import { optionsTipoContato } from '@/utils/constants'
 
 const ModalsStore = useModalsStore()
 const { contactSwitch } = ModalsStore
@@ -78,11 +79,7 @@ function handleSubmit(e) {
           <span>Dados</span>
           <div class="form-input-wrapper">
             <InputSelect
-              :options="[
-                { key: 'CELULAR', label: 'CELULAR' },
-                { key: 'EMAIL', label: 'EMAIL' },
-                { key: 'TELEFONE', label: 'TELEFONE' },
-              ]"
+              :options="optionsTipoContato"
               v-model="formFields.tipoContato"
               label="Tipo de Contato"
               name="type"
@@ -109,7 +106,7 @@ function handleSubmit(e) {
           </div>
         </div>
         <div class="form-button-wrapper">
-          <button class="default-button" type="reset">Limpar</button>
+          <button class="default-button" type="reset">Restaurar</button>
           <button class="default-button" type="submit">Enviar</button>
           <button class="close-button" type="button" @click="contactSwitch">
             <span class="not-visible">close</span>X

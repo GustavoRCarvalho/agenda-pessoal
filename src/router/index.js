@@ -4,6 +4,7 @@ import PeopleView from '@/components/people/PeopleView.vue'
 import UsersView from '@/components/users/UsersView.vue'
 import ContactsView from '@/components/contacts/ContactsView.vue'
 import LogoutView from '@/components/LogoutView.vue'
+import MyRegisterView from '@/components/myRegister/MyRegisterView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,11 @@ const router = createRouter({
       path: '/contacts',
       name: 'contacts',
       component: ContactsView,
+    },
+    {
+      path: '/myRegister',
+      name: 'myRegister',
+      component: MyRegisterView,
     },
     {
       path: '/logout',

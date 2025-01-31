@@ -21,6 +21,12 @@ export const userFormFields = {
   telefone: '',
   username: '',
 }
+export const passFormFields = {
+  newPasswordConfirmation: '',
+  newPassword: '',
+  password: '',
+  username: '',
+}
 export const contactFormFields = {
   email: '',
   id: 0,
@@ -54,3 +60,14 @@ export const patterns = {
   a: { pattern: /[a-zA-Z]/, transform: (v) => v.toLocaleLowerCase() },
   '!': { escape: true },
 }
+
+export const optionsTiposUser = [
+  { key: 'ROLE_ADMIN', label: 'Administrador' },
+  { key: 'ROLE_USER', label: 'Usuário' },
+]
+
+export const optionsTipoContato = [
+  { key: 'CELULAR', label: 'Celular' },
+  { key: 'EMAIL', label: 'Email' },
+  { key: 'TELEFONE', label: 'Telefone' },
+]

@@ -1,4 +1,9 @@
-import { contactFormFields, peopleFormFields, userFormFields } from '@/utils/constants'
+import {
+  contactFormFields,
+  passFormFields,
+  peopleFormFields,
+  userFormFields,
+} from '@/utils/constants'
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'
 
@@ -7,6 +12,7 @@ export const useRegistersStore = defineStore('registers', {
     peopleRegisterEdit: reactive(peopleFormFields),
     contactRegisterEdit: reactive(contactFormFields),
     userRegisterEdit: reactive(userFormFields),
+    passRegisterEdit: reactive(passFormFields),
   }),
   actions: {
     changePeopleRegisterEdit(id) {
@@ -90,6 +96,9 @@ export const useRegistersStore = defineStore('registers', {
     },
     resetUserRegisterEdit() {
       this.userRegisterEdit = userFormFields
+    },
+    resetPassRegisterEdit() {
+      this.passRegisterEdit = passFormFields
     },
   },
 })

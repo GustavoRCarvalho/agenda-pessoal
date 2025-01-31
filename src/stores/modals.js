@@ -6,6 +6,7 @@ export const useModalsStore = defineStore('modals', {
     peopleModal: ref(false),
     contactModal: ref(false),
     userModal: ref(false),
+    passModal: ref(false),
   }),
   actions: {
     peopleSwitch() {
@@ -16,6 +17,9 @@ export const useModalsStore = defineStore('modals', {
     },
     userSwitch() {
       this.userModal = !this.userModal
+    },
+    passSwitch() {
+      this.passModal = !this.passModal
     },
   },
 })

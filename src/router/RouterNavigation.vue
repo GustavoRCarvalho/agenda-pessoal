@@ -4,6 +4,7 @@
     <RouterLink to="/users">Usuários</RouterLink>
     <RouterLink to="/people">Pessoas</RouterLink>
     <RouterLink to="/contacts">Contatos</RouterLink>
+    <RouterLink to="/myRegister">Meu Cadastro</RouterLink>
     <RouterLink to="/logout">Logout</RouterLink>
   </nav>
 </template>
