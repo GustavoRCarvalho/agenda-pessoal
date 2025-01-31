@@ -23,16 +23,30 @@
       border-bottom-left-radius: 0.25em;
     }
   }
+  thead > tr > th:nth-child(1),
+  tbody > tr > td:nth-child(1) {
+    padding-left: 1em;
+    text-align: start;
+
+    @media (max-width: 720px) {
+      padding-left: 0.3em;
+    }
+  }
 
   thead > tr > th:nth-last-child(1),
   tbody > tr > td:nth-last-child(1) {
+    padding-right: 1em;
     text-align: end;
+    @media (max-width: 720px) {
+      padding-right: 0.3em;
+    }
   }
   tbody > tr > td > img {
-    width: 3em;
+    height: 100%;
     aspect-ratio: 1;
   }
   tbody > tr > td {
+    height: 2.5em;
     border-bottom: 1px solid var(--color-gray-border);
 
     overflow: hidden;

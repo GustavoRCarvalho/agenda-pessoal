@@ -11,6 +11,16 @@ export const peopleFormFields = {
   numero: '',
   pais: '',
 }
+export const userFormFields = {
+  cpf: '',
+  dataNascimento: '',
+  email: '',
+  id: 0,
+  nome: '',
+  password: '',
+  telefone: '',
+  username: '',
+}
 export const contactFormFields = {
   email: '',
   id: 0,
