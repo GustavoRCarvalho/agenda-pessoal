@@ -6,21 +6,23 @@ import { ref } from 'vue'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import HomeList from './HomeList.vue'
+import { watch } from 'vue'
 
 const store = useModalsStore()
 const { contactSwitch } = store
 
 const ListsStore = useListsStore()
 const { setContacts, setPhoto } = ListsStore
-const { contacts, photos } = storeToRefs(ListsStore)
+const { contacts } = storeToRefs(ListsStore)
 
 const search = ref('')
 
 onMounted(() => {
   if (contacts.value?.length === 0) setContacts()
+})
 
-  contacts.value.forEach(({ pessoa }) => {
-    if (photos[pessoa?.foto?.id]) return
+watch(contacts, (value) => {
+  value.forEach(({ pessoa }) => {
     setPhoto(pessoa?.foto?.id)
   })
 })

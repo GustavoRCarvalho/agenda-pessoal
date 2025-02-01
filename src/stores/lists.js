@@ -34,7 +34,8 @@ export const useListsStore = defineStore('lists', {
     },
     setPhoto(id) {
       // fetch photo by id
-      if (id !== null || id !== undefined) {
+      if (id !== null && id !== undefined && this.photos[id] === undefined) {
+        console.log('fetch photo by id')
         this.photos[id] = {
           byteArray: byteArray,
           description: 'string',

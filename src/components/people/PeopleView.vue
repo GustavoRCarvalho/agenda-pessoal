@@ -6,21 +6,23 @@ import InputDefault from '../inputs/InputDefault.vue'
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
+import { watch } from 'vue'
 
 const store = useModalsStore()
 const { peopleSwitch } = store
 
 const ListsStore = useListsStore()
 const { setPeople, setPhoto } = ListsStore
-const { people, photos } = storeToRefs(ListsStore)
+const { people } = storeToRefs(ListsStore)
 
 const search = ref('')
 
 onMounted(() => {
   if (people.value?.length === 0) setPeople()
+})
 
-  people.value.forEach((pessoa) => {
-    if (photos[pessoa?.foto?.id]) return
+watch(people, (value) => {
+  value.forEach((pessoa) => {
     setPhoto(pessoa?.foto?.id)
   })
 })
