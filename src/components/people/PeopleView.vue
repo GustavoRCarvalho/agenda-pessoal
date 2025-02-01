@@ -11,13 +11,18 @@ const store = useModalsStore()
 const { peopleSwitch } = store
 
 const ListsStore = useListsStore()
-const { setPeople } = ListsStore
-const { people } = storeToRefs(ListsStore)
+const { setPeople, setPhoto } = ListsStore
+const { people, photos } = storeToRefs(ListsStore)
 
 const search = ref('')
 
 onMounted(() => {
   if (people.value?.length === 0) setPeople()
+
+  people.value.forEach((pessoa) => {
+    if (photos[pessoa?.foto?.id]) return
+    setPhoto(pessoa?.foto?.id)
+  })
 })
 </script>
 <template>

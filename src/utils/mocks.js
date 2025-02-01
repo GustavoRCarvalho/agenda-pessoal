@@ -21,7 +21,7 @@ export const listContact = [
         pais: 'BR',
       },
       foto: {
-        id: '123',
+        id: 0,
         name: 'string',
         type: 'png',
       },
@@ -59,7 +59,7 @@ export const listContact = [
         pais: 'BR',
       },
       foto: {
-        id: '123',
+        id: 0,
         name: 'string',
         type: 'png',
       },

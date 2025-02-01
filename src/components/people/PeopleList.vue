@@ -1,6 +1,11 @@
 <script setup>
+import { useListsStore } from '@/stores/lists'
 import { useModalsStore } from '@/stores/modals'
 import { useRegistersStore } from '@/stores/registers'
+import { storeToRefs } from 'pinia'
+
+const ListsStore = useListsStore()
+const { people, photos } = storeToRefs(ListsStore)
 
 const RegisterStore = useRegistersStore()
 const { changePeopleRegisterEdit, resetPeopleRegisterEdit } = RegisterStore
@@ -19,8 +24,6 @@ function handleDelete(id) {
     console.log(id)
   }
 }
-
-const peopleList = [{ id: 123456, name: 'Lorem Ipsum', src: '@/assets/logo.svg' }]
 </script>
 <template>
   <table class="list-table">
@@ -32,17 +35,26 @@ const peopleList = [{ id: 123456, name: 'Lorem Ipsum', src: '@/assets/logo.svg' 
       </tr>
     </thead>
     <tbody>
-      <tr v-for="people in peopleList" :key="people.id">
+      <tr v-for="pessoa in people" :key="pessoa.id">
         <td>
-          <img :alt="'Foto da ' + people.name" class="logo" src="@/assets/logo.svg" />
+          <img
+            :alt="'Foto da ' + pessoa.nome"
+            class="logo"
+            :src="
+              'data:image/png;base64,' +
+              (photos[pessoa?.foto?.id]?.byteArray
+                ? photos[pessoa?.foto?.id]?.byteArray
+                : byteArray)
+            "
+          />
         </td>
-        <td>{{ people.name }}</td>
+        <td>{{ pessoa.nome }}</td>
         <td>
-          <button class="tool-button edit-button" @click="handleClickEdit(people.id)">
-            <span class="not-visible">Editar {{ people.name }}</span
+          <button class="tool-button edit-button" @click="handleClickEdit(pessoa.id)">
+            <span class="not-visible">Editar {{ pessoa.nome }}</span
             >E</button
-          ><button class="tool-button delete-button" @click="handleDelete(people.id)">
-            <span class="not-visible">Deletar {{ people.name }}</span
+          ><button class="tool-button delete-button" @click="handleDelete(pessoa.id)">
+            <span class="not-visible">Deletar {{ pessoa.nome }}</span
             >D
           </button>
         </td>

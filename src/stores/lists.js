@@ -1,6 +1,7 @@
 import { listContact, listPeople, listUsers } from '@/utils/mocks'
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'
+import { byteArray } from '../assets/byteArray'
 
 export const useListsStore = defineStore('lists', {
   state: () => ({
@@ -8,6 +9,7 @@ export const useListsStore = defineStore('lists', {
     people: reactive([]),
     favs: reactive([]),
     users: reactive([]),
+    photos: reactive({}),
   }),
   actions: {
     setContacts() {
@@ -23,12 +25,27 @@ export const useListsStore = defineStore('lists', {
     setFavs() {
       //fetch da lista
       console.log('fetch da lista de favoritos')
-      this.favs = listContact
+      this.favs = [listContact[0]]
     },
     setUsers() {
       //fetch da lista
       console.log('fetch da lista de usuarios')
       this.users = listUsers
+    },
+    setPhoto(id) {
+      // fetch photo by id
+      if (id !== null || id !== undefined) {
+        this.photos[id] = {
+          byteArray: byteArray,
+          description: 'string',
+          filename: 'string',
+          inputStream: {},
+          open: true,
+          readable: true,
+          uri: 'string',
+          url: 'string',
+        }
+      }
     },
   },
 })
