@@ -12,6 +12,7 @@ import InputSelect from '../inputs/InputSelect.vue'
 import InputPhone from '../inputs/InputPhone.vue'
 import { optionsTipoContato } from '@/utils/constants'
 import { ref } from 'vue'
+import { useUserStore } from '@/stores/user'
 
 const ModalsStore = useModalsStore()
 const { contactSwitch } = ModalsStore
@@ -20,6 +21,9 @@ const { contactModal } = storeToRefs(ModalsStore)
 const ListsStore = useListsStore()
 const { setPeople } = ListsStore
 const { people } = storeToRefs(ListsStore)
+
+const UserStore = useUserStore()
+const { user } = storeToRefs(UserStore)
 
 const RegisterStore = useRegistersStore()
 const { resetContactRegisterEdit } = RegisterStore
@@ -86,6 +90,8 @@ function handleSubmit(e) {
     return
   }
 
+  formFields.usuario = user.value
+  // post
   console.log(formFields)
 }
 </script>

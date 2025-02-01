@@ -34,7 +34,7 @@ export const contactFormFields = {
     key: 0,
     label: '',
   },
-  privado: true,
+  privado: false,
   tag: '',
   telefone: '',
   tipoContato: { key: '', label: '' },
