@@ -27,14 +27,14 @@ export const listContact = [
       },
     },
     usuario: {
-      cpf: '111.111.111-11',
+      cpf: '000.000.000-00',
       dataNascimento: '2025.11.11',
-      email: 'usuario@email.com',
-      id: 16,
-      nome: 'usuario1',
+      email: 'usuario2@email.com',
+      id: 36,
+      nome: 'usuario2',
       password: 'senha',
-      telefone: '(51) 9 9999-9999',
-      username: 'username1',
+      telefone: '(22) 2 2222-2222',
+      username: 'username2',
     },
   },
   {
@@ -117,5 +117,28 @@ export const listPeople = [
       name: 'string',
       type: 'png',
     },
+  },
+]
+
+export const listUsers = [
+  {
+    cpf: '000.000.000-00',
+    dataNascimento: '2025.11.11',
+    email: 'usuario@email.com',
+    id: 26,
+    nome: 'usuario1',
+    password: 'senha',
+    telefone: '(51) 9 9999-9999',
+    username: 'username1',
+  },
+  {
+    cpf: '000.000.000-00',
+    dataNascimento: '2025.11.11',
+    email: 'usuario2@email.com',
+    id: 36,
+    nome: 'usuario2',
+    password: 'senha',
+    telefone: '(22) 2 2222-2222',
+    username: 'username2',
   },
 ]

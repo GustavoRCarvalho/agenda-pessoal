@@ -109,6 +109,10 @@ function handleSubmit(e) {
               label="Selecione uma Pessoa"
               name="pessoa"
             />
+            <button type="button" class="reload-button" @click="setPeople">
+              <span class="not-visible">Recarregar lista de Pessoas</span>
+              R
+            </button>
           </div>
         </div>
         <div class="form-input-container">

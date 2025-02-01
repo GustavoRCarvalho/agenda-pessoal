@@ -3,13 +3,11 @@ import { useListsStore } from '@/stores/lists'
 import { useModalsStore } from '@/stores/modals'
 import { useRegistersStore } from '@/stores/registers'
 import { storeToRefs } from 'pinia'
-import { onMounted } from 'vue'
 
 const RegisterStore = useRegistersStore()
 const { changeContactRegisterEdit, resetContactRegisterEdit } = RegisterStore
 
 const ListsStore = useListsStore()
-const { setContacts } = ListsStore
 const { contacts } = storeToRefs(ListsStore)
 
 const ModalsStore = useModalsStore()
@@ -20,10 +18,6 @@ function handleClickEdit(contact) {
   changeContactRegisterEdit(contact)
   contactSwitch()
 }
-
-onMounted(() => {
-  setContacts()
-})
 
 function handleDelete(id) {
   if (id) {

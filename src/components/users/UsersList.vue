@@ -1,6 +1,11 @@
 <script setup>
+import { useListsStore } from '@/stores/lists'
 import { useModalsStore } from '@/stores/modals'
 import { useRegistersStore } from '@/stores/registers'
+import { storeToRefs } from 'pinia'
+
+const ListsStore = useListsStore()
+const { users } = storeToRefs(ListsStore)
 
 const RegisterStore = useRegistersStore()
 const { changeUserRegisterEdit, resetUserRegisterEdit } = RegisterStore
@@ -19,24 +24,6 @@ function handleDelete(id) {
     console.log(id)
   }
 }
-
-const userList = [
-  {
-    id: 1,
-    username: 'username',
-    nome: 'Lorem Ipsum',
-  },
-  {
-    id: 2,
-    username: 'username',
-    nome: 'Ipsum Lorem',
-  },
-  {
-    id: 3,
-    username: 'username',
-    nome: 'Lorem Lorem',
-  },
-]
 </script>
 <template>
   <table class="list-table">
@@ -48,7 +35,7 @@ const userList = [
       </tr>
     </thead>
     <tbody>
-      <tr v-for="user in userList" :key="user.id">
+      <tr v-for="user in users" :key="user.id">
         <td>{{ user.nome }}</td>
         <td>{{ user.username }}</td>
         <td>
