@@ -26,8 +26,7 @@ const model = defineModel()
   margin-block: 0.6em;
 }
 div {
-  width: 100%;
-  width: 100%;
+  flex-grow: 1;
   max-width: 14.7em;
 
   @media (max-width: 720px) {
