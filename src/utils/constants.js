@@ -78,3 +78,5 @@ export const optionsTipoContato = [
   { key: 'EMAIL', label: 'Email' },
   { key: 'TELEFONE', label: 'Telefone' },
 ]
+
+export const libTipoContato = { CELULAR: 'Celular', EMAIL: 'Email', TELEFONE: 'Telefone' }

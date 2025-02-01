@@ -15,7 +15,7 @@ export const useUserStore = defineStore('user', {
           email: 'email@email.com',
           telefone: '(23) 9 9999-9999',
           cpf: '000-000-000-00',
-          dataNascimento: '2025.11.11',
+          dataNascimento: '2025-11-11',
           username: 'username',
           password: 'senha',
         }

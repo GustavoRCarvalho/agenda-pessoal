@@ -1,75 +1,58 @@
 <script setup>
+import { useListsStore } from '@/stores/lists'
 import { useModalsStore } from '@/stores/modals'
 import { useRegistersStore } from '@/stores/registers'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 
 const RegisterStore = useRegistersStore()
 const { changeContactRegisterEdit, resetContactRegisterEdit } = RegisterStore
 
+const ListsStore = useListsStore()
+const { setContacts } = ListsStore
+const { contacts } = storeToRefs(ListsStore)
+
 const ModalsStore = useModalsStore()
 const { contactSwitch } = ModalsStore
 
-function handleClickEdit(id) {
+function handleClickEdit(contact) {
   resetContactRegisterEdit()
-  changeContactRegisterEdit(id)
+  changeContactRegisterEdit(contact)
   contactSwitch()
 }
+
+onMounted(() => {
+  setContacts()
+})
 
 function handleDelete(id) {
   if (id) {
     console.log(id)
   }
 }
-
-const peopleList = [
-  {
-    id: 1,
-    name: 'Lorem Ipsum',
-    private: true,
-    tipoContato: 'TELEFONE',
-    src: '@/assets/logo.svg',
-  },
-  {
-    id: 2,
-    name: 'Ipsum Lorem',
-    private: false,
-    tipoContato: 'EMAIL',
-    src: '@/assets/logo.svg',
-  },
-  {
-    id: 3,
-    name: 'Lorem Lorem',
-    private: false,
-    tipoContato: 'CELULAR',
-    src: '@/assets/logo.svg',
-  },
-]
 </script>
 <template>
   <table class="list-table">
     <thead>
       <tr>
-        <th></th>
         <th>Nome</th>
         <th>Tipo</th>
         <th>Ferramentas</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="people in peopleList" :key="people.id">
+      <tr v-for="contact in contacts" :key="contact.id">
         <td>
-          <img :alt="'Foto da ' + people.name" class="logo" src="@/assets/logo.svg" />
+          <span>{{ contact.private ? 'Privado' : 'Público' }}</span
+          >{{ contact.name }}
         </td>
+        <td>{{ contact.tipoContato }}</td>
         <td>
-          <span>{{ people.private ? 'Privado' : 'Público' }}</span
-          >{{ people.name }}
-        </td>
-        <td>{{ people.tipoContato }}</td>
-        <td>
-          <button class="tool-button edit-button" @click="handleClickEdit(people.id)">
-            <span class="not-visible">Editar {{ people.name }}</span
+          <button class="tool-button edit-button" @click="handleClickEdit(contact)">
+            <span class="not-visible">Editar {{ contact.name }}</span
             >E</button
-          ><button class="tool-button delete-button" @click="handleDelete(people.id)">
-            <span class="not-visible">Deletar {{ people.name }}</span
+          ><button class="tool-button delete-button" @click="handleDelete(contact.id)">
+            <span class="not-visible">Deletar {{ contact.name }}</span
             >D
           </button>
         </td>

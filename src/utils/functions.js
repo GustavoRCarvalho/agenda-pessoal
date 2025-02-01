@@ -29,14 +29,14 @@ export function verifyBi(year) {
 export function gerateDateMask(date) {
   let useMask = ''
 
-  const dateSplit = date.split('.')
+  const dateSplit = date.split('-')
   // Verifca o ano
   if (dateSplit[0]) {
     const yearFirstDigit = dateSplit[0][0]
     //19##
-    if (yearFirstDigit === '1') useMask = '1J##.H'
+    if (yearFirstDigit === '1') useMask = '1J##-H'
     // 20##
-    else if (yearFirstDigit === '2') useMask = '2D##.H'
+    else if (yearFirstDigit === '2') useMask = '2D##-H'
   }
 
   // Verifca o mês
@@ -46,9 +46,9 @@ export function gerateDateMask(date) {
 
     if (mouthFirstDigit === '0') {
       // impede que fevereiro tenha um dia >= a 30
-      useMask += mouthSecondDigit === '2' ? 'I.I' : 'B.G'
+      useMask += mouthSecondDigit === '2' ? 'I-I' : 'B-G'
     } else if (mouthFirstDigit === '1') {
-      useMask += 'I.G'
+      useMask += 'I-G'
     }
   }
 
