@@ -5,6 +5,7 @@ import ModalsController from './router/ModalsController.vue'
 import { onMounted } from 'vue'
 
 import { useUserStore } from '@/stores/user'
+import AlertController from './components/alerts/AlertController.vue'
 const UserStore = useUserStore()
 const { setUser } = UserStore
 
@@ -22,6 +23,7 @@ onMounted(() => {
   <MainContentContainer>
     <RouterView />
     <ModalsController />
+    <AlertController />
   </MainContentContainer>
 </template>
 
