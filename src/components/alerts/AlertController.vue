@@ -15,9 +15,7 @@ watch(alerts.value, (alert) => {
   }, 4000)
 })
 function handleRemove(message) {
-  setTimeout(() => {
-    removeAlert(message)
-  }, 500)
+  removeAlert(message)
 }
 // Isso ficou muito bom
 </script>
