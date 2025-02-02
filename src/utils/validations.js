@@ -27,8 +27,6 @@ export function passValidation({ values, errors }) {
     newErrors.newPasswordConfirmation = 'Nova senha e confirmação devem ser iguais'
     isValid = false
   }
-  console.log(errors)
-  console.log(newErrors)
 
   Object.assign(errors, newErrors)
   return isValid
