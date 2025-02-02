@@ -16,7 +16,10 @@ export function passValidation({ values, errors }) {
     newErrors.newPassword = 'Nova senha não pode ser igual a senha atual'
     isValid = false
   }
-  if (
+  if (values.newPassword && /[^A-Za-z0-9]/.test(values.newPassword)) {
+    newErrors.newPassword = 'Senha deve conter apenas letras e/ou números'
+    isValid = false
+  } else if (
     values.newPasswordConfirmation &&
     values.newPassword &&
     values.newPasswordConfirmation !== values.newPassword
@@ -24,6 +27,8 @@ export function passValidation({ values, errors }) {
     newErrors.newPasswordConfirmation = 'Nova senha e confirmação devem ser iguais'
     isValid = false
   }
+  console.log(errors)
+  console.log(newErrors)
 
   Object.assign(errors, newErrors)
   return isValid
