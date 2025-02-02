@@ -22,9 +22,11 @@ function handleClickEdit(contact) {
 }
 
 function handleDelete(id) {
-  if (id) {
-    console.log(id)
-  }
+  console.log(id)
+}
+
+function handleFav(id) {
+  console.log(id)
 }
 </script>
 <template>
@@ -51,9 +53,13 @@ function handleDelete(id) {
             "
           />
         </td>
-        <td>{{ contact?.pessoa?.nome }}</td>
+        <td>{{ contact.pessoa?.nome }}</td>
         <td>{{ contact.tipoContato }}</td>
         <td>
+          <button class="tool-button edit-button" @click="handleFav(contact.id)">
+            <span class="not-visible">Favoritar {{ contact.name }}</span
+            >F
+          </button>
           <button class="tool-button edit-button" @click="handleClickEdit(contact)">
             <span class="not-visible">Editar {{ contact.name }}</span
             >E</button
@@ -66,43 +72,3 @@ function handleDelete(id) {
     </tbody>
   </table>
 </template>
-<!-- [
-  {
-    "email": "string",
-    "id": 0,
-    "pessoa": {
-      "cpf": "string",
-      "endereco": {
-        "bairro": "string",
-        "cep": "string",
-        "cidade": "string",
-        "estado": "string",
-        "id": 0,
-        "logradouro": "string",
-        "numero": 0,
-        "pais": "string"
-      },
-      "foto": {
-        "id": "string",
-        "name": "string",
-        "type": "string"
-      },
-      "id": 0,
-      "nome": "string"
-    },
-    "privado": true,
-    "tag": "string",
-    "telefone": "string",
-    "tipoContato": "CELULAR",
-    "usuario": {
-      "cpf": "string",
-      "dataNascimento": "2025-01-28",
-      "email": "string",
-      "id": 0,
-      "nome": "string",
-      "password": "string",
-      "telefone": "string",
-      "username": "string"
-    }
-  }
-] -->

@@ -30,14 +30,16 @@ export const passFormFields = {
 export const contactFormFields = {
   email: '',
   id: 0,
-  pessoa: {
-    key: 0,
+  pessoa: {},
+  pessoaOption: {
+    key: '',
     label: '',
   },
   privado: false,
   tag: '',
   telefone: '',
-  tipoContato: { key: '', label: '' },
+  tipoContato: {},
+  tipoContatoOption: { key: '', label: '' },
   usuario: {
     cpf: '',
     dataNascimento: '',
