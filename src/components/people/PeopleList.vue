@@ -1,4 +1,5 @@
 <script setup>
+import { byteArray } from '@/assets/byteArray'
 import { useListsStore } from '@/stores/lists'
 import { useModalsStore } from '@/stores/modals'
 import { useRegistersStore } from '@/stores/registers'
