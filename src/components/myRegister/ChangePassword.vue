@@ -37,6 +37,15 @@ watch(
   },
 )
 
+watch(
+  () => formValues.newPassword,
+  (newPassword) => {
+    if (newPassword && formErrors['newPasswordConfirmation']) {
+      formErrors['newPasswordConfirmation'] = null
+    }
+  },
+)
+
 function handleReset(e) {
   e.preventDefault()
   Object.assign(formValues, passRegisterEdit.value)
