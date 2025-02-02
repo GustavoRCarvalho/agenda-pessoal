@@ -98,7 +98,9 @@ function handleSubmit(e) {
 <template>
   <ModalBackground @closeModal="contactSwitch">
     <div class="modal-container">
-      <h2 class="register-title">Registro de Contato</h2>
+      <h2 class="register-title">
+        {{ formFields.id === null ? 'Cadastrar Novo ' : 'Atualizar ' }}Contato
+      </h2>
       <form class="register-form" v-on:submit="handleSubmit" v-on:reset="handleReset">
         <div class="form-input-container">
           <span>Pessoa</span>
@@ -146,8 +148,12 @@ function handleSubmit(e) {
           </div>
         </div>
         <div class="form-button-wrapper">
-          <button class="default-button" type="reset">Restaurar</button>
-          <button class="default-button" type="submit">Enviar</button>
+          <button class="default-button" type="reset">
+            {{ formFields.id === null ? 'Limpar' : 'Restaurar' }}
+          </button>
+          <button class="default-button" type="submit">
+            {{ formFields.id === null ? 'Cadastrar' : 'Salvar' }}
+          </button>
           <button class="close-button" type="button" @click="contactSwitch">
             <span class="not-visible">close</span>X
           </button>

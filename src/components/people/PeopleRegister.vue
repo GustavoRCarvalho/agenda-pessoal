@@ -75,7 +75,9 @@ async function handleFile(e) {
 <template>
   <ModalBackground @closeModal="peopleSwitch">
     <div class="modal-container">
-      <h2 class="register-title">Registro de Pessoa</h2>
+      <h2 class="register-title">
+        {{ formFields.id === null ? 'Cadastrar Nova ' : 'Atualizar ' }} Pessoa
+      </h2>
       <form class="register-form" v-on:submit="handleSubmit" v-on:reset="handleReset">
         <div class="form-input-container">
           <span>Dados</span>
@@ -173,8 +175,12 @@ async function handleFile(e) {
           </div>
         </div>
         <div class="form-button-wrapper">
-          <button class="default-button" type="reset">Restaurar</button>
-          <button class="default-button" type="submit">Enviar</button>
+          <button class="default-button" type="reset">
+            {{ formFields.id === null ? 'Limpar' : 'Restaurar' }}
+          </button>
+          <button class="default-button" type="submit">
+            {{ formFields.id === null ? 'Cadastrar' : 'Salvar' }}
+          </button>
           <button class="close-button" type="button" @click="peopleSwitch">
             <span class="not-visible">close</span>X
           </button>

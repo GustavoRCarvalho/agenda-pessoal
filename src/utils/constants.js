@@ -1,5 +1,5 @@
 export const peopleFormFields = {
-  id: 0,
+  id: null,
   name: '',
   cpf: '',
   foto: {},
@@ -15,7 +15,7 @@ export const userFormFields = {
   cpf: '',
   dataNascimento: '',
   email: '',
-  id: 0,
+  id: null,
   nome: '',
   password: '',
   telefone: '',
@@ -29,7 +29,7 @@ export const passFormFields = {
 }
 export const contactFormFields = {
   email: '',
-  id: 0,
+  id: null,
   pessoa: {},
   pessoaOption: {
     key: '',
@@ -44,7 +44,7 @@ export const contactFormFields = {
     cpf: '',
     dataNascimento: '',
     email: '',
-    id: 0,
+    id: null,
     nome: '',
     password: '',
     telefone: '',
