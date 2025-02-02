@@ -45,6 +45,7 @@ export const useRegistersStore = defineStore('registers', {
           id: 1,
           nome: 'Lorem Ipsum',
           password: 'senha',
+          passwordConfirmation: 'senha',
           telefone: '(23) 9 9999-9999',
           username: 'username',
         }
@@ -57,6 +58,7 @@ export const useRegistersStore = defineStore('registers', {
           id: 2,
           nome: 'Ipsum Lorem',
           password: 'senha',
+          passwordConfirmation: 'senha',
           telefone: '(23) 9 9999-9999',
           username: 'username',
         }

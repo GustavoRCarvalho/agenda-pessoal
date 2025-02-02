@@ -6,6 +6,7 @@ import { reactive, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { generateUniqueId } from '../../utils/functions'
 import InputDefault from '../inputs/InputDefault.vue'
+import { passValidation } from '@/utils/validations'
 
 const ModalsStore = useModalsStore()
 const { passSwitch } = ModalsStore
@@ -15,13 +16,14 @@ const RegisterStore = useRegistersStore()
 const { resetPassRegisterEdit } = RegisterStore
 const { passRegisterEdit } = storeToRefs(RegisterStore)
 
-const formFields = reactive({ ...passRegisterEdit.value })
+const formValues = reactive({ ...passRegisterEdit.value })
+const formErrors = reactive({})
 
 //Atualiza os campos reativos do formulário caso seja aberto como um editar
 watch(
   () => passRegisterEdit.value,
   (newVal) => {
-    Object.assign(formFields, newVal)
+    Object.assign(formValues, newVal)
   },
 )
 
@@ -37,14 +39,15 @@ watch(
 
 function handleReset(e) {
   e.preventDefault()
-  Object.assign(formFields, passRegisterEdit.value)
+  Object.assign(formValues, passRegisterEdit.value)
 }
 
 function handleSubmit(e) {
   e.preventDefault()
 
-  const form = new FormData(e.target)
-  const formValues = Object.fromEntries(form)
+  if (!passValidation({ values: formValues, errors: formErrors })) {
+    return
+  }
   if (!formValues.id) {
     formValues.id = generateUniqueId()
   }
@@ -60,21 +63,24 @@ function handleSubmit(e) {
         <div class="form-input-wrapper">
           <InputDefault
             :needFocus="passModal"
-            v-model="formFields.password"
+            v-model="formValues.password"
+            :errorMessage="formErrors.password"
             type="password"
             label="Senha Atual"
             name="username"
             placeholder="Senha"
           />
           <InputDefault
-            v-model="formFields.newPassword"
+            v-model="formValues.newPassword"
+            :errorMessage="formErrors.newPassword"
             type="password"
             label="Nova Senha"
             name="new-password"
             placeholder="Nova Senha"
           />
           <InputDefault
-            v-model="formFields.newPasswordConfirmation"
+            v-model="formValues.newPasswordConfirmation"
+            :errorMessage="formErrors.newPasswordConfirmation"
             type="password"
             label="Confirme a Nova Senha"
             name="new-password"

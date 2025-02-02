@@ -4,8 +4,10 @@ import { useRegistersStore } from '@/stores/registers'
 import ModalBackground from '@/router/ModalBackground.vue'
 import { reactive, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { generateUniqueId, transformImage } from '../../utils/functions'
+import { generateUniqueId, transformImage, verifyCEP } from '../../utils/functions'
 import InputDefault from '../inputs/InputDefault.vue'
+import { peopleValidation } from '@/utils/validations'
+import { debounce } from 'lodash'
 
 const ModalsStore = useModalsStore()
 const { peopleSwitch } = ModalsStore
@@ -15,19 +17,20 @@ const RegisterStore = useRegistersStore()
 const { resetPeopleRegisterEdit } = RegisterStore
 const { peopleRegisterEdit } = storeToRefs(RegisterStore)
 
-const formFields = reactive({ ...peopleRegisterEdit.value })
+const formValues = reactive({ ...peopleRegisterEdit.value })
+const formErrors = reactive({})
 
-//Atualiza os campos reativos do formulário caso seja aberto como um editar
+// Atualiza os campos reativos do formulário caso seja aberto como um editar
 watch(
   () => peopleRegisterEdit.value,
   (newVal) => {
-    Object.assign(formFields, newVal)
-    formFields.foto.data = {}
-    formFields.foto.src = ''
+    Object.assign(formValues, newVal)
+    formValues.foto.data = {}
+    formValues.foto.src = ''
   },
 )
 
-//Limpa o store do Cadastro de Pessoas quando fecha a modal
+// Limpa o store do Cadastro de Pessoas quando fecha a modal
 watch(
   () => peopleModal.value,
   (newVal) => {
@@ -37,18 +40,40 @@ watch(
   },
 )
 
-function handleReset(e) {
-  e.preventDefault()
-  Object.assign(formFields, peopleRegisterEdit.value)
-  formFields.foto.data = {}
-  formFields.foto.src = ''
-}
+// Verifica o cep para preencher automaticamente os campos durante a execução
+// e adiciona ou remove o erro dependendo da função
+// Faz debounce pois verifyCEP possui uma chamada fetch
+watch(
+  () => formValues.cep,
+  debounce(async (cep) => {
+    const newValues = await verifyCEP(cep)
+
+    if (!newValues?.erro) {
+      formValues.pais = 'BR'
+      formValues.estado = newValues.estado
+      formValues.cidade = newValues.localidade
+      formValues.bairro = newValues.bairro
+      formValues.logradouro = newValues.logradouro
+      formErrors['cep'] = null
+    } else {
+      formErrors['cep'] = 'CEP não encontrado'
+    }
+  }, 300),
+),
+  function handleReset(e) {
+    e.preventDefault()
+    Object.assign(formValues, peopleRegisterEdit.value)
+    formValues.foto.data = {}
+    formValues.foto.src = ''
+  }
 
 function handleSubmit(e) {
   e.preventDefault()
 
-  const form = new FormData(e.target)
-  const formValues = Object.fromEntries(form)
+  if (!peopleValidation({ values: formValues, errors: formErrors })) {
+    return
+  }
+
   if (!formValues.id) {
     formValues.id = generateUniqueId()
   }
@@ -62,10 +87,10 @@ async function handleFile(e) {
     console.error('Imagens devem ser no formato .PNG ou .JPEG')
     return
   }
-  formFields.foto.data = file
+  formValues.foto.data = file
 
   try {
-    formFields.foto.src = await transformImage(file)
+    formValues.foto.src = await transformImage(file)
   } catch (error) {
     // event Error
     console.error('Erro ao processar a imagem:', error)
@@ -76,7 +101,7 @@ async function handleFile(e) {
   <ModalBackground @closeModal="peopleSwitch">
     <div class="modal-container">
       <h2 class="register-title">
-        {{ formFields.id === null ? 'Cadastrar Nova ' : 'Atualizar ' }} Pessoa
+        {{ formValues.id === null ? 'Cadastrar Nova ' : 'Atualizar ' }} Pessoa
       </h2>
       <form class="register-form" v-on:submit="handleSubmit" v-on:reset="handleReset">
         <div class="form-input-container">
@@ -84,14 +109,15 @@ async function handleFile(e) {
           <div class="form-input-wrapper">
             <InputDefault
               :needFocus="peopleModal"
-              v-model="formFields.name"
+              v-model="formValues.name"
               type="text"
               label="Nome"
               name="name"
               placeholder="Nome"
             />
             <InputDefault
-              v-model="formFields.cpf"
+              v-model="formValues.cpf"
+              :errorMessage="formErrors.cpf"
               type="text"
               label="CPF"
               name="cpf"
@@ -104,7 +130,8 @@ async function handleFile(e) {
           <span>Endereço</span>
           <div class="form-input-wrapper">
             <InputDefault
-              v-model="formFields.cep"
+              v-model="formValues.cep"
+              :error-message="formErrors.cep"
               type="text"
               label="CEP"
               name="cep"
@@ -112,42 +139,42 @@ async function handleFile(e) {
               placeholder="00000-000"
             />
             <InputDefault
-              v-model="formFields.pais"
+              v-model="formValues.pais"
               type="text"
               label="País"
               name="pais"
               placeholder="País"
             />
             <InputDefault
-              v-model="formFields.estado"
+              v-model="formValues.estado"
               type="text"
               label="Estado"
               name="estado"
               placeholder="Estado"
             />
             <InputDefault
-              v-model="formFields.cidade"
+              v-model="formValues.cidade"
               type="text"
               label="Cidade"
               name="cidade"
               placeholder="Cidade"
             />
             <InputDefault
-              v-model="formFields.bairro"
+              v-model="formValues.bairro"
               type="text"
               label="Bairro"
               name="bairro"
               placeholder="Bairro"
             />
             <InputDefault
-              v-model="formFields.logradouro"
+              v-model="formValues.logradouro"
               type="text"
               label="Rua"
               name="logradouro"
               placeholder="Rua"
             />
             <InputDefault
-              v-model="formFields.numero"
+              v-model="formValues.numero"
               type="number"
               label="Número"
               name="numero"
@@ -160,10 +187,10 @@ async function handleFile(e) {
           <div class="form-input-wrapper">
             <div class="form-image-wrapper">
               <label for="foto"
-                ><span :class="formFields.foto?.src && 'not-visible'">Adicionar Foto</span
-                ><img v-if="formFields.foto?.src" :src="formFields.foto?.src" alt="Foto Escolhida"
+                ><span :class="formValues.foto?.src && 'not-visible'">Adicionar Foto</span
+                ><img v-if="formValues.foto?.src" :src="formValues.foto?.src" alt="Foto Escolhida"
               /></label>
-              <!-- @change="(e) => (formFields.foto = e.target.files[0])" -->
+              <!-- @change="(e) => (formValues.foto = e.target.files[0])" -->
               <input
                 type="file"
                 @change="handleFile"
@@ -176,10 +203,10 @@ async function handleFile(e) {
         </div>
         <div class="form-button-wrapper">
           <button class="default-button" type="reset">
-            {{ formFields.id === null ? 'Limpar' : 'Restaurar' }}
+            {{ formValues.id === null ? 'Limpar' : 'Restaurar' }}
           </button>
           <button class="default-button" type="submit">
-            {{ formFields.id === null ? 'Cadastrar' : 'Salvar' }}
+            {{ formValues.id === null ? 'Cadastrar' : 'Salvar' }}
           </button>
           <button class="close-button" type="button" @click="peopleSwitch">
             <span class="not-visible">close</span>X

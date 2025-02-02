@@ -6,6 +6,7 @@ import { storeToRefs } from 'pinia'
 import InputDefault from '../inputs/InputDefault.vue'
 import InputPhone from '../inputs/InputPhone.vue'
 import InputDate from '../inputs/InputDate.vue'
+import { userValidation } from '@/utils/validations'
 
 const ModalsStore = useModalsStore()
 const { passSwitch } = ModalsStore
@@ -13,25 +14,30 @@ const { passSwitch } = ModalsStore
 const UserStore = useUserStore()
 const { user } = storeToRefs(UserStore)
 
-const formFields = reactive({ ...user.value })
+const formValues = reactive({ ...user.value })
+const formErrors = reactive({})
 
 //Atualiza os campos reativos do formulário caso acha alteração no usuário
 watch(
   () => user.value,
   (newVal) => {
-    Object.assign(formFields, newVal)
+    Object.assign(formValues, newVal)
   },
 )
 
 function handleReset(e) {
   e.preventDefault()
-  Object.assign(formFields, user.value)
+  Object.assign(formValues, user.value)
 }
 
 function handleSubmit(e) {
   e.preventDefault()
 
-  console.log(formFields)
+  if (!userValidation({ values: formValues, errors: formErrors })) {
+    return
+  }
+
+  console.log(formValues)
 }
 </script>
 <template>
@@ -41,41 +47,43 @@ function handleSubmit(e) {
       <span>Dados</span>
       <div class="form-input-wrapper">
         <InputDefault
-          v-model="formFields.nome"
+          v-model="formValues.nome"
           type="text"
           label="Nome"
           name="nome"
           placeholder="Nome"
         />
         <InputDefault
-          v-model="formFields.username"
+          v-model="formValues.username"
           type="text"
           label="Apelido"
           name="username"
           placeholder="Apelido"
         />
         <InputDefault
-          v-model="formFields.cpf"
+          v-model="formValues.cpf"
+          :errorMessage="formErrors.cpf"
           type="text"
           label="CPF"
           name="cpf"
           mask="###.###.###-##"
           placeholder="000.000.000-00"
         />
-        <InputDate v-model="formFields.dataNascimento" />
+        <InputDate v-model="formValues.dataNascimento" />
       </div>
     </div>
     <div class="form-input-container">
       <span>Contatos</span>
       <div class="form-input-wrapper">
         <InputDefault
-          v-model="formFields.email"
+          v-model="formValues.email"
+          :errorMessage="formErrors.cpf"
           type="text"
           label="Email"
           name="email"
           placeholder="seuemail@dominio.com"
         />
-        <InputPhone v-model="formFields.telefone" />
+        <InputPhone v-model="formValues.telefone" />
       </div>
     </div>
     <div class="form-button-wrapper">

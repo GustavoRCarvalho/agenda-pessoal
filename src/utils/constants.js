@@ -20,6 +20,7 @@ export const userFormFields = {
   password: '',
   telefone: '',
   username: '',
+  passwordConfirmation: '',
 }
 export const passFormFields = {
   newPasswordConfirmation: '',

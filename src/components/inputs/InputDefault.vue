@@ -8,6 +8,7 @@ import { ref } from 'vue'
 const props = defineProps({
   autoComplete: { type: String, default: '' },
   needFocus: { type: Boolean, default: false },
+  errorMessage: { type: String, default: '' },
   type: { type: String, default: 'text' },
   label: { type: String, default: '' },
   name: { type: String, default: '' },
@@ -16,6 +17,7 @@ const props = defineProps({
 })
 const model = defineModel()
 
+const valid = ref(!props.errorMessage)
 const isFocus = ref(props.needFocus)
 const inputRef = useTemplateRef('inputRef')
 
@@ -31,12 +33,34 @@ watch(
   },
 )
 
+watch(
+  () => props.errorMessage,
+  (message) => {
+    if (!inputRef.value || inputRef.value.value === '') {
+      return
+    }
+    if (message) {
+      inputRef.value.setCustomValidity(message)
+      valid.value = inputRef.value.reportValidity()
+      return
+    }
+    inputRef.value.setCustomValidity('')
+    // aqui não é interessante chamar reportValidity, pois ele emite um evento no input, que é indesejado
+    valid.value = true
+  },
+)
+
+watch(model, () => {
+  inputRef.value.setCustomValidity('')
+  valid.value = true
+})
+
 function focusHasChange(bool) {
   isFocus.value = bool
 }
 </script>
 <template>
-  <div>
+  <div :class="{ hasError: !valid }">
     <label :for="name" :class="{ active: model || isFocus }">{{ label }}</label>
     <input
       v-if="mask"
@@ -64,6 +88,7 @@ function focusHasChange(bool) {
       :autoComplete="autoComplete"
       @focusin="focusHasChange(true)"
       @focusout="focusHasChange(false)"
+      :minlength="['new-password', 'password', 'current-password'].includes(type) ? 8 : 0"
       :maxlength="200"
       required
     />
@@ -127,5 +152,12 @@ label {
 label.active {
   font-size: 0.8em;
   top: -0.75em;
+}
+div.hasError {
+  border-color: red;
+}
+
+div.hasError > label {
+  color: red;
 }
 </style>
