@@ -14,16 +14,16 @@
     padding: 0.5em;
     padding-left: 0;
     &:nth-last-child(1) {
-      padding-right: 1em;
+      padding-right: 20px;
     }
   }
   thead > tr > th:nth-child(1),
   tbody > tr > td:nth-child(1) {
-    padding-left: 1em;
+    padding-left: 20px;
     text-align: start;
 
     @media (max-width: 720px) {
-      padding-left: 0.3em;
+      padding-left: 0.5em;
     }
   }
 
@@ -32,7 +32,7 @@
     padding-right: 1em;
     text-align: end;
     @media (max-width: 720px) {
-      padding-right: 0.3em;
+      padding-right: 0.5em;
     }
   }
   tbody > tr > td > img {

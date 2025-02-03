@@ -109,6 +109,10 @@ body {
 
   gap: 1em;
   margin-inline: 20px;
+
+  @media (max-width: 720px) {
+    margin-inline: 0.5em;
+  }
 }
 
 .top-wrapper > h1 {
@@ -116,4 +120,8 @@ body {
   margin-bottom: 10px;
   font-size: 1.4em;
   font-weight: 450;
+
+  @media (max-width: 720px) {
+    margin-top: 0.5em;
+  }
 }

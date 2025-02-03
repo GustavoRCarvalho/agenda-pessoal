@@ -194,7 +194,10 @@ main {
   min-height: calc(100dvh - 3.5em);
 
   @media (min-width: 1400px) {
-    margin-inline: 15em;
+    margin-left: 15em;
+  }
+  @media (min-width: calc(1400px + 30em)) {
+    margin-inline: auto;
   }
 }
 </style>
