@@ -4,6 +4,8 @@ import { useListsStore } from '@/stores/lists'
 import { useModalsStore } from '@/stores/modals'
 import { useRegistersStore } from '@/stores/registers'
 import { storeToRefs } from 'pinia'
+import IconEdit from '../icons/IconEdit.vue'
+import IconTrash from '../icons/IconTrash.vue'
 
 const ListsStore = useListsStore()
 const { people, photos } = storeToRefs(ListsStore)
@@ -53,10 +55,10 @@ function handleDelete(id) {
         <td>
           <button class="tool-button edit-button" @click="handleClickEdit(pessoa.id)">
             <span class="not-visible">Editar {{ pessoa.nome }}</span
-            >E</button
+            ><IconEdit /></button
           ><button class="tool-button delete-button" @click="handleDelete(pessoa.id)">
             <span class="not-visible">Deletar {{ pessoa.nome }}</span
-            >D
+            ><IconTrash />
           </button>
         </td>
       </tr>

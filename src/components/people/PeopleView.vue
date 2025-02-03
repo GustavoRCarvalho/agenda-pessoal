@@ -7,6 +7,7 @@ import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import { watch } from 'vue'
+import IconReload from '../icons/IconReload.vue'
 
 const store = useModalsStore()
 const { peopleSwitch } = store
@@ -49,7 +50,7 @@ watch(people, (value) => {
       title="Recarregar Lista de Pessoas"
     >
       <span class="not-visible">Recarregar lista de Pessoas</span>
-      R
+      <IconReload />
     </button>
   </div>
   <PeopleList />

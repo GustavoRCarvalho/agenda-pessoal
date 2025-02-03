@@ -13,6 +13,7 @@ import InputPhone from '../inputs/InputPhone.vue'
 import { optionsTipoContato } from '@/utils/constants'
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
+import IconReload from '../icons/IconReload.vue'
 
 const ModalsStore = useModalsStore()
 const { contactSwitch } = ModalsStore
@@ -113,7 +114,7 @@ function handleSubmit(e) {
             />
             <button type="button" class="reload-button" @click="setPeople">
               <span class="not-visible">Recarregar lista de Pessoas</span>
-              R
+              <IconReload />
             </button>
           </div>
         </div>

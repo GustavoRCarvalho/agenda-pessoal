@@ -6,6 +6,7 @@ import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import { useListsStore } from '@/stores/lists'
+import IconReload from '../icons/IconReload.vue'
 
 const store = useModalsStore()
 const { userSwitch } = store
@@ -40,7 +41,7 @@ onMounted(() => {
       title="Recarregar Lista de Usuários"
     >
       <span class="not-visible">Recarregar lista de Usuários</span>
-      R
+      <IconReload />
     </button>
   </div>
   <UsersList />

@@ -6,6 +6,7 @@ import InputDefault from '../inputs/InputDefault.vue'
 import { ref } from 'vue'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
+import IconReload from '../icons/IconReload.vue'
 
 const store = useModalsStore()
 const { contactSwitch } = store
@@ -42,7 +43,7 @@ onMounted(() => {
       @click="setContacts"
     >
       <span class="not-visible">Recarregar lista de Contatos</span>
-      R
+      <IconReload />
     </button>
   </div>
   <ContactsList />

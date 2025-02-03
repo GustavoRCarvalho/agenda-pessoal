@@ -3,6 +3,8 @@ import { useListsStore } from '@/stores/lists'
 import { useModalsStore } from '@/stores/modals'
 import { useRegistersStore } from '@/stores/registers'
 import { storeToRefs } from 'pinia'
+import IconEdit from '../icons/IconEdit.vue'
+import IconTrash from '../icons/IconTrash.vue'
 
 const RegisterStore = useRegistersStore()
 const { changeContactRegisterEdit, resetContactRegisterEdit } = RegisterStore
@@ -44,10 +46,10 @@ function handleDelete(id) {
         <td>
           <button class="tool-button edit-button" @click="handleClickEdit(contact)">
             <span class="not-visible">Editar {{ contact.name }}</span
-            >E</button
+            ><IconEdit /></button
           ><button class="tool-button delete-button" @click="handleDelete(contact.id)">
             <span class="not-visible">Deletar {{ contact.name }}</span
-            >D
+            ><IconTrash />
           </button>
         </td>
       </tr>

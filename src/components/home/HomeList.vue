@@ -4,6 +4,10 @@ import { useListsStore } from '@/stores/lists'
 import { useModalsStore } from '@/stores/modals'
 import { useRegistersStore } from '@/stores/registers'
 import { storeToRefs } from 'pinia'
+import IconStar from '../icons/IconStar.vue'
+import IconEdit from '../icons/IconEdit.vue'
+import IconTrash from '../icons/IconTrash.vue'
+import IconStarFilled from '../icons/IconStarFilled.vue'
 
 const RegisterStore = useRegistersStore()
 const { changeContactRegisterEdit, resetContactRegisterEdit } = RegisterStore
@@ -61,14 +65,15 @@ function handleFav(id) {
             @click="handleFav(contact.id)"
           >
             <span class="not-visible">Favoritar {{ contact.name }}</span
-            >F
+            ><IconStarFilled v-if="favs[contact.id]" />
+            <IconStar v-else />
           </button>
           <button class="tool-button edit-button" @click="handleClickEdit(contact)">
             <span class="not-visible">Editar {{ contact.name }}</span
-            >E</button
+            ><IconEdit /></button
           ><button class="tool-button delete-button" @click="handleDelete(contact.id)">
             <span class="not-visible">Deletar {{ contact.name }}</span
-            >D
+            ><IconTrash />
           </button>
         </td>
       </tr>

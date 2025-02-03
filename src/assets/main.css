@@ -39,6 +39,15 @@ body {
   min-height: 100dvh;
 }
 
+.icon {
+  width: 100%;
+  height: 100%;
+}
+.table-icon {
+  width: 1.5em;
+  width: 1.5em;
+}
+
 .not-visible:not(:focus):not(:active) {
   position: absolute;
 
