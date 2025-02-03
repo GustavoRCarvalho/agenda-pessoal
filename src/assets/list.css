@@ -15,12 +15,6 @@
     padding-left: 0;
     &:nth-last-child(1) {
       padding-right: 1em;
-      border-top-right-radius: 0.25em;
-      border-bottom-right-radius: 0.25em;
-    }
-    &:nth-child(1) {
-      border-top-left-radius: 0.25em;
-      border-bottom-left-radius: 0.25em;
     }
   }
   thead > tr > th:nth-child(1),

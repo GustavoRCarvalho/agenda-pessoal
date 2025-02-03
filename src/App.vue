@@ -1,6 +1,5 @@
 <script setup>
 import RouterNavigation from './router/RouterNavigation.vue'
-import MainContentContainer from '@/components/MainContentContainer.vue'
 import ModalsController from './router/ModalsController.vue'
 import { onMounted } from 'vue'
 
@@ -38,16 +37,11 @@ watch(accessToken, (newToken) => {
 </script>
 
 <template>
-  <header>
-    <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
+  <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
 
-    <RouterNavigation />
-  </header>
-  <MainContentContainer>
-    <RouterView />
-    <ModalsController />
-    <AlertController />
-  </MainContentContainer>
+  <RouterNavigation> <RouterView /></RouterNavigation>
+  <ModalsController />
+  <AlertController />
 </template>
 
 <style scoped>
