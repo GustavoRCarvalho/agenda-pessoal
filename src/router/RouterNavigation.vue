@@ -1,12 +1,22 @@
+<script setup>
+import { useAuthStore } from '@/stores/auth'
+import { storeToRefs } from 'pinia'
+
+const AuthStore = useAuthStore()
+const { logout } = AuthStore
+const { tokenType, accessToken } = storeToRefs(AuthStore)
+</script>
 <template>
-  <nav>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/users">Usuários</RouterLink>
-    <RouterLink to="/people">Pessoas</RouterLink>
-    <RouterLink to="/contacts">Contatos</RouterLink>
-    <RouterLink to="/myRegister">Meu Cadastro</RouterLink>
-    <RouterLink to="/logout">Logout</RouterLink>
-  </nav>
+  <div v-if="accessToken !== ''">
+    <nav>
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink v-if="tokenType === 'ROLE-ADMIN'" to="/users">Usuários</RouterLink>
+      <RouterLink to="/people">Pessoas</RouterLink>
+      <RouterLink to="/contacts">Contatos</RouterLink>
+      <RouterLink to="/myRegister">Meu Cadastro</RouterLink>
+    </nav>
+    <button class="default-button" @click="logout">Logout</button>
+  </div>
 </template>
 
 <style scoped>

@@ -21,5 +21,8 @@ export const useUserStore = defineStore('user', {
         }
       }
     },
+    unsetUser() {
+      this.user = {}
+    },
   },
 })

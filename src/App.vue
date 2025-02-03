@@ -6,11 +6,34 @@ import { onMounted } from 'vue'
 
 import { useUserStore } from '@/stores/user'
 import AlertController from './components/alerts/AlertController.vue'
+import { storeToRefs } from 'pinia'
+import { watch } from 'vue'
+import { useAuthStore } from './stores/auth'
+import router from '@/router'
+
 const UserStore = useUserStore()
-const { setUser } = UserStore
+const { setUser, unsetUser } = UserStore
+
+const AuthStore = useAuthStore()
+const { accessToken, id } = storeToRefs(AuthStore)
 
 onMounted(() => {
-  setUser(1)
+  if (accessToken && id) {
+    setUser(id)
+  }
+})
+
+watch(id, (newId) => {
+  if (newId) {
+    setUser(newId)
+  } else {
+    unsetUser()
+  }
+})
+watch(accessToken, (newToken) => {
+  if (newToken === '') {
+    router.push('/login')
+  }
 })
 </script>
 

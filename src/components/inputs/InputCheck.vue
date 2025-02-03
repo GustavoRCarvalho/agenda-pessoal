@@ -6,9 +6,9 @@ defineProps({
 const model = defineModel()
 </script>
 <template>
-  <div>
-    <label :for="name">{{ label }}</label>
-    <input type="checkbox" v-model="model" :name="name" />
+  <div class="checkbox-container">
+    <label class="checkbox-label" :for="name">{{ label }}</label>
+    <input class="checkbox-input" type="checkbox" v-model="model" :name="name" />
   </div>
 </template>
 
@@ -45,7 +45,7 @@ input[type='checkbox'] {
   aspect-ratio: 1;
 }
 input:checked {
-  accent-color: #45ee4a;
+  accent-color: #76e77a;
   color: white;
 }
 

@@ -61,7 +61,9 @@ function focusHasChange(bool) {
 </script>
 <template>
   <div :class="{ hasError: !valid }">
-    <label :for="name" :class="{ active: model || isFocus }">{{ label }}</label>
+    <label class="default-input-label" :for="name" :class="{ active: model || isFocus }">{{
+      label
+    }}</label>
     <input
       v-if="mask"
       ref="inputRef"
@@ -112,6 +114,7 @@ div {
   }
 }
 input {
+  background-color: transparent;
   font-size: 1em;
   outline: none;
   border: none;

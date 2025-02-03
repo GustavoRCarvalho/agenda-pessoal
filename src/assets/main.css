@@ -26,11 +26,11 @@ body {
 
 #app {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   font-weight: normal;
 
-  @media (min-width: 1024px) {
-    flex-direction: row;
+  @media (max-width: 720px) {
+    flex-direction: column;
   }
 }
 
@@ -69,7 +69,7 @@ main {
 }
 
 .default-button {
-  background-color: transparent;
+  background-color: white;
 
   border: 1px solid var(--color-gray-border);
   border-radius: 0.25em;
