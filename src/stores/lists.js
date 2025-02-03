@@ -25,7 +25,7 @@ export const useListsStore = defineStore('lists', {
     setFavs() {
       //fetch da lista
       console.log('fetch da lista de favoritos')
-      this.favs = [listContact[0]]
+      this.favs = { [listContact[0].id]: listContact[0] }
     },
     setUsers() {
       //fetch da lista

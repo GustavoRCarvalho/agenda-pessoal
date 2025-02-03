@@ -12,13 +12,14 @@ const store = useModalsStore()
 const { contactSwitch } = store
 
 const ListsStore = useListsStore()
-const { setContacts, setPhoto } = ListsStore
-const { contacts } = storeToRefs(ListsStore)
+const { setContacts, setFavs, setPhoto } = ListsStore
+const { contacts, favs } = storeToRefs(ListsStore)
 
 const search = ref('')
 
 onMounted(() => {
   if (contacts.value?.length === 0) setContacts()
+  if (favs.value?.length === 0) setFavs()
 })
 
 watch(contacts, (value) => {
@@ -54,4 +55,3 @@ watch(contacts, (value) => {
   </div>
   <HomeList />
 </template>
-<style scoped></style>

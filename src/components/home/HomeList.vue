@@ -9,7 +9,7 @@ const RegisterStore = useRegistersStore()
 const { changeContactRegisterEdit, resetContactRegisterEdit } = RegisterStore
 
 const ListsStore = useListsStore()
-const { contacts, photos } = storeToRefs(ListsStore)
+const { contacts, favs, photos } = storeToRefs(ListsStore)
 
 const ModalsStore = useModalsStore()
 const { contactSwitch } = ModalsStore
@@ -55,7 +55,11 @@ function handleFav(id) {
         <td>{{ contact.pessoa?.nome }}</td>
         <td>{{ contact.tipoContato }}</td>
         <td>
-          <button class="tool-button edit-button" @click="handleFav(contact.id)">
+          <button
+            class="tool-button edit-button"
+            :class="favs[contact.id] && 'isFav'"
+            @click="handleFav(contact.id)"
+          >
             <span class="not-visible">Favoritar {{ contact.name }}</span
             >F
           </button>
@@ -71,3 +75,8 @@ function handleFav(id) {
     </tbody>
   </table>
 </template>
+<style scoped>
+.isFav {
+  color: red;
+}
+</style>
