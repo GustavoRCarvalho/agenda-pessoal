@@ -15,8 +15,8 @@ function handleClick() {
 }
 </script>
 <template>
-  <button class="open-button" v-show="!openNav" @click="handleClick">☰</button>
-  <main :class="openNav && 'main-nav-open'">
+  <button class="open-button" v-show="!openNav && accessToken" @click="handleClick">☰</button>
+  <main :class="{ 'main-nav-open': openNav, 'not-auth': !accessToken }">
     <slot></slot>
   </main>
   <div
@@ -200,6 +200,14 @@ main {
     margin-left: 15em;
   }
   @media (min-width: calc(1400px + 30em)) {
+    margin-inline: auto;
+  }
+}
+.not-auth {
+  margin: 1.5em;
+  height: calc(100dvh - 3em);
+
+  @media (min-width: calc(1400px)) {
     margin-inline: auto;
   }
 }
