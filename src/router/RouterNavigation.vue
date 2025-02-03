@@ -1,4 +1,5 @@
 <script setup>
+import IconLeft from '@/components/icons/IconLeft.vue'
 import { useAuthStore } from '@/stores/auth'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
@@ -25,7 +26,7 @@ function handleClick() {
     v-if="accessToken !== ''"
   >
     <nav>
-      <button :class="'close-button'" @click="handleClick">{{ '<' }}</button>
+      <button :class="'close-button'" @click="handleClick"><IconLeft /></button>
       <RouterLink to="/">Home</RouterLink>
       <RouterLink v-if="tokenType === 'ROLE-ADMIN'" to="/users">Usuários</RouterLink>
       <RouterLink to="/people">Pessoas</RouterLink>
@@ -104,9 +105,11 @@ nav a.router-link-exact-active {
 
 .close-button {
   position: absolute;
-  font-size: 1.5em;
+  font-size: 1em;
+  width: 2em;
+  height: 2em;
 
-  padding-inline: 0.5em;
+  padding: 0;
   border-radius: 0.4em;
 
   top: 0.5em;
@@ -118,7 +121,7 @@ nav a.router-link-exact-active {
 
   &:hover {
     color: #222;
-    background-color: #ddd;
+    background-color: #eeeeee;
   }
 }
 
