@@ -52,6 +52,12 @@
       max-width: 5em;
     }
   }
+
+  @media (max-width: 720px) {
+    .middle-table {
+      display: none;
+    }
+  }
 }
 
 .not-found {

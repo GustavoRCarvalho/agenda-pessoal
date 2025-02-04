@@ -84,7 +84,7 @@ async function handleFav(contact) {
       <tr>
         <th></th>
         <th>Nome</th>
-        <th>Tipo</th>
+        <th class="middle-table">Tipo</th>
         <th>Ferramentas</th>
       </tr>
     </thead>
@@ -102,7 +102,7 @@ async function handleFav(contact) {
           />
         </td>
         <td>{{ contact.pessoa?.nome }}</td>
-        <td>{{ contact.tipoContato }}</td>
+        <td class="middle-table">{{ contact.tipoContato }}</td>
         <td>
           <button
             class="tool-button edit-button"

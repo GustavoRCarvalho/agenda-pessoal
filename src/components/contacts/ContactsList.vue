@@ -68,7 +68,7 @@ async function handleDelete(id) {
     <thead>
       <tr>
         <th>Nome</th>
-        <th>Tipo</th>
+        <th class="middle-table">Tipo</th>
         <th>Ferramentas</th>
       </tr>
     </thead>
@@ -81,7 +81,7 @@ async function handleDelete(id) {
           /></span>
           {{ contact.pessoa?.nome }}
         </td>
-        <td>{{ contact.tipoContato }}</td>
+        <td class="middle-table">{{ contact.tipoContato }}</td>
         <td>
           <button class="tool-button edit-button" @click="handleClickEditNOGET(contact)">
             <span class="not-visible">Editar {{ contact.pessoa?.nome }}</span
