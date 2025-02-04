@@ -36,7 +36,7 @@ onUnmounted(() => {
 
 watch(people, (value) => {
   value.forEach((pessoa) => {
-    setPhoto(pessoa?.foto?.id)
+    setPhoto(pessoa?.id)
   })
 })
 

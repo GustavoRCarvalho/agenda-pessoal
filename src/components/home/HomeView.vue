@@ -37,7 +37,7 @@ onUnmounted(() => {
 
 watch(contacts, (value) => {
   value.forEach(({ pessoa }) => {
-    setPhoto(pessoa?.foto?.id)
+    setPhoto(pessoa?.id)
   })
 })
 

@@ -4,7 +4,7 @@ import { useRegistersStore } from '@/stores/registers'
 import ModalBackground from '@/router/ModalBackground.vue'
 import { reactive, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { generateUniqueId, transformImage, verifyCEP } from '../../utils/functions'
+import { transformImage, verifyCEP } from '../../utils/functions'
 import InputDefault from '../inputs/InputDefault.vue'
 import { peopleValidation } from '@/utils/validations'
 import { debounce } from 'lodash'
@@ -48,9 +48,7 @@ watch(
   (newVal) => {
     Object.assign(formValues, newVal)
     formValues.foto = newVal.foto
-    formValues.foto.src = newVal?.foto?.id
-      ? `data:image/png;base64,${photos[newVal?.foto?.id]?.byteArray}`
-      : ''
+    formValues.foto.src = photos.value[newVal.id] || ''
   },
 )
 
@@ -100,9 +98,12 @@ async function handleFile(e) {
     return
   }
   formValues.foto.data = file
+  formValues.foto.size = file.size
+  formValues.foto.type = file.type
 
   try {
     formValues.foto.src = await transformImage(file)
+    formValues.foto.src = `data:${file?.type};base64,` + formValues.foto.src
   } catch (e) {
     if (e.status === 404 || e?.response?.data?.message) {
       createAlertError('Erro ao processar a imagem!')
@@ -118,25 +119,24 @@ async function handleSubmit(e) {
     return
   }
 
-  if (formValues.foto?.data) {
-    try {
-      const response = await photoService.postPhoto(generateUniqueId(), formValues.foto.data)
-
-      formValues.foto.id = response.data.object.id
-      formValues.foto.name = response.data.object.name
-      formValues.foto.type = response.data.object.type
-      createAlertSucess(`Sucesso ao fazer upload da foto.`)
-    } catch (e) {
-      if (e.status === 404 || e?.response?.data?.message) {
-        createAlertError('Erro ao fazer upload da foto!')
-      }
-      createAlertError(e?.response?.data?.message)
-    }
-  }
-
   try {
-    await peopleService.postPeople(formValues)
+    const response = await peopleService.postPeople(formValues)
     createAlertSucess(`Sucesso ao salvar a pessoa.`)
+
+    if (formValues.foto?.size && response.data.object.id) {
+      try {
+        await photoService.postPhoto(response.data.object.id, formValues.foto.data)
+
+        createAlertSucess(`Sucesso ao fazer upload da foto.`)
+      } catch (e) {
+        console.error(e)
+        if (e.status === 404 || !e?.response?.data?.message) {
+          createAlertError('Erro ao fazer upload da foto!')
+        }
+        createAlertError(e?.response?.data?.message)
+      }
+    }
+
     setPeople()
     peopleSwitch()
   } catch (e) {

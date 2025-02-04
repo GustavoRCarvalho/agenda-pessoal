@@ -95,10 +95,9 @@ async function handleFav(contact) {
             :alt="'Foto da ' + contact.pessoa?.name"
             class="logo"
             :src="
-              'data:image/png;base64,' +
-              (photos[contact.pessoa?.foto?.id]?.byteArray
-                ? photos[contact.pessoa?.foto?.id]?.byteArray
-                : byteArray)
+              photos[contact.pessoa?.id]
+                ? photos[contact.pessoa?.id]
+                : 'data:image/png;base64,' + byteArray
             "
           />
         </td>

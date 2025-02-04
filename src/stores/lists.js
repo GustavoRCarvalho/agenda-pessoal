@@ -37,8 +37,8 @@ export const useListsStore = defineStore('lists', {
     async setPhoto(id) {
       if (!id) return
       if (!this.photos[id]) {
-        // const response = await photoService.findPhoto(id)
-        // this.photos[id] = response.data
+        const response = await photoService.findPhoto(id)
+        this.photos[id] = URL.createObjectURL(response.data)
       }
     },
   },

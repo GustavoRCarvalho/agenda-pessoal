@@ -63,12 +63,7 @@ async function handleDelete(id) {
           <img
             :alt="'Foto da ' + pessoa.nome"
             class="logo"
-            :src="
-              'data:image/png;base64,' +
-              (photos[pessoa?.foto?.id]?.byteArray
-                ? photos[pessoa?.foto?.id]?.byteArray
-                : byteArray)
-            "
+            :src="photos[pessoa?.id] ? photos[pessoa?.id] : 'data:image/png;base64,' + byteArray"
           />
         </td>
         <td>{{ pessoa.nome }}</td>
