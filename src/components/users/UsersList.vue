@@ -5,6 +5,10 @@ import { useRegistersStore } from '@/stores/registers'
 import { storeToRefs } from 'pinia'
 import IconEdit from '../icons/IconEdit.vue'
 import IconTrash from '../icons/IconTrash.vue'
+import { useAlertsStore } from '@/stores/alerts'
+
+const AlertsStore = useAlertsStore()
+const { createAlertError, createAlertSucess } = AlertsStore
 
 const ListsStore = useListsStore()
 const { users } = storeToRefs(ListsStore)
@@ -15,12 +19,16 @@ const { changeUserRegisterEdit, resetUserRegisterEdit } = RegisterStore
 const ModalsStore = useModalsStore()
 const { userSwitch } = ModalsStore
 
-function handleClickEdit(id) {
+async function handleClickEdit(id) {
   resetUserRegisterEdit()
-  changeUserRegisterEdit(id)
-  userSwitch()
+  try {
+    await changeUserRegisterEdit(id)
+    createAlertSucess('Pessoa encontrada com sucesso.')
+    userSwitch()
+  } catch (e) {
+    createAlertError(e?.message)
+  }
 }
-
 function handleDelete(id) {
   if (id) {
     console.log(id)

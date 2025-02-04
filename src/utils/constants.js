@@ -1,15 +1,17 @@
 export const peopleFormFields = {
   id: null,
-  name: '',
+  nome: '',
   cpf: '',
   foto: {},
-  bairro: '',
-  cep: '',
-  cidade: '',
-  estado: '',
-  logradouro: '',
-  numero: '',
-  pais: '',
+  endereco: {
+    bairro: '',
+    cep: '',
+    cidade: '',
+    estado: '',
+    logradouro: '',
+    numero: '',
+    pais: '',
+  },
 }
 export const userFormFields = {
   cpf: '',
@@ -21,6 +23,10 @@ export const userFormFields = {
   telefone: '',
   username: '',
   passwordConfirmation: '',
+  tipoOption: {
+    key: 'ROLE_USER',
+    label: 'Usuário',
+  },
 }
 export const passFormFields = {
   newPasswordConfirmation: '',
@@ -39,7 +45,7 @@ export const contactFormFields = {
   privado: false,
   tag: '',
   telefone: '',
-  tipoContato: {},
+  tipoContato: '',
   tipoContatoOption: { key: '', label: '' },
   usuario: {
     cpf: '',
@@ -75,6 +81,8 @@ export const optionsTiposUser = [
   { key: 'ROLE_ADMIN', label: 'Administrador' },
   { key: 'ROLE_USER', label: 'Usuário' },
 ]
+
+export const libTiposUser = { ROLE_ADMIN: 'Administrador', ROLE_USER: 'Usuário' }
 
 export const optionsTipoContato = [
   { key: 'CELULAR', label: 'Celular' },

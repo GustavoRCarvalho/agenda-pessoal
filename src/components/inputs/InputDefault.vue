@@ -17,7 +17,7 @@ const props = defineProps({
 })
 const model = defineModel()
 
-const valid = ref(!props.errorMessage)
+const valid = ref(true) // Essa ref rastreia o estado atual do erro para alterar a classe do container do input
 const isFocus = ref(props.needFocus)
 const inputRef = useTemplateRef('inputRef')
 
@@ -33,26 +33,22 @@ watch(
   },
 )
 
-watch(
-  () => props.errorMessage,
-  (message) => {
-    if (!inputRef.value || inputRef.value.value === '') {
-      return
-    }
-    if (message) {
-      inputRef.value.setCustomValidity(message)
-      valid.value = inputRef.value.reportValidity()
-      return
-    }
-    inputRef.value.setCustomValidity('')
-    // aqui não é interessante chamar reportValidity, pois ele emite um evento no input, que é indesejado
-    valid.value = true
-  },
-)
+watch(props, () => {
+  if (!inputRef.value || inputRef.value.value === '') {
+    return
+  }
+  const message = props?.errorMessage ?? ''
 
-watch(model, () => {
-  inputRef.value.setCustomValidity('')
-  valid.value = true
+  // Altera a mensagem de validação do input
+  inputRef.value.setCustomValidity(message)
+
+  if (message === '') {
+    valid.value = true
+    return
+  }
+  // Emite um evento para que exibir a mensagem de alerta
+  inputRef.value.reportValidity()
+  valid.value = false
 })
 
 function focusHasChange(bool) {

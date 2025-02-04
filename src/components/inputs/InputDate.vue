@@ -1,31 +1,25 @@
 <script setup>
-import { gerateDateMask } from '@/utils/functions'
-import { computed } from 'vue'
 import { ref } from 'vue'
 
 const model = defineModel()
 const isFocus = ref(false)
+const date = new Date()
 
 function focusHasChange(bool) {
   isFocus.value = bool
 }
-
-//verificação de data
-const dateTokens = computed(() => {
-  return gerateDateMask(model.value)
-})
 </script>
 <template>
   <div>
-    <label for="phone" :class="{ active: model || isFocus }">Data de Nascimento</label>
+    <label for="date" :class="{ active: model || isFocus }">Data de Nascimento</label>
     <input
-      type="tel"
-      name="phone"
-      placeholder="1970.12.31"
+      type="date"
+      name="dataNascimento"
       v-model="model"
-      v-mask="dateTokens"
+      autocomplete="bday-day"
       @focusin="focusHasChange(true)"
       @focusout="focusHasChange(false)"
+      :max="`${date.getFullYear()}-12-31`"
       required
     />
   </div>

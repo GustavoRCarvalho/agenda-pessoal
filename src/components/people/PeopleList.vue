@@ -6,6 +6,10 @@ import { useRegistersStore } from '@/stores/registers'
 import { storeToRefs } from 'pinia'
 import IconEdit from '../icons/IconEdit.vue'
 import IconTrash from '../icons/IconTrash.vue'
+import { useAlertsStore } from '@/stores/alerts'
+
+const AlertsStore = useAlertsStore()
+const { createAlertError, createAlertSucess } = AlertsStore
 
 const ListsStore = useListsStore()
 const { people, photos } = storeToRefs(ListsStore)
@@ -16,10 +20,15 @@ const { changePeopleRegisterEdit, resetPeopleRegisterEdit } = RegisterStore
 const ModalsStore = useModalsStore()
 const { peopleSwitch } = ModalsStore
 
-function handleClickEdit(id) {
+async function handleClickEdit(id) {
   resetPeopleRegisterEdit()
-  changePeopleRegisterEdit(id)
-  peopleSwitch()
+  try {
+    await changePeopleRegisterEdit(id)
+    createAlertSucess('Pessoa encontrada com sucesso.')
+    peopleSwitch()
+  } catch (e) {
+    createAlertError(e?.message)
+  }
 }
 
 function handleDelete(id) {
@@ -64,6 +73,7 @@ function handleDelete(id) {
       </tr>
     </tbody>
   </table>
+  <span class="not-found" v-if="!people.length">Nenhuma pessoa encontrada</span>
 </template>
 <!-- [
   {

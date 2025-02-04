@@ -8,6 +8,10 @@ import IconStar from '../icons/IconStar.vue'
 import IconEdit from '../icons/IconEdit.vue'
 import IconTrash from '../icons/IconTrash.vue'
 import IconStarFilled from '../icons/IconStarFilled.vue'
+import { useAlertsStore } from '@/stores/alerts'
+
+const AlertsStore = useAlertsStore()
+const { createAlertError, createAlertSucess } = AlertsStore
 
 const RegisterStore = useRegistersStore()
 const { changeContactRegisterEdit, resetContactRegisterEdit } = RegisterStore
@@ -18,10 +22,16 @@ const { contacts, favs, photos } = storeToRefs(ListsStore)
 const ModalsStore = useModalsStore()
 const { contactSwitch } = ModalsStore
 
-function handleClickEdit(contact) {
+async function handleClickEdit(id) {
   resetContactRegisterEdit()
-  changeContactRegisterEdit(contact)
-  contactSwitch()
+
+  try {
+    await changeContactRegisterEdit(id)
+    createAlertSucess('Pessoa encontrada com sucesso.')
+    contactSwitch()
+  } catch (e) {
+    createAlertError(e?.message)
+  }
 }
 
 function handleDelete(id) {
@@ -68,7 +78,7 @@ function handleFav(id) {
             ><IconStarFilled v-if="favs[contact.id]" />
             <IconStar v-else />
           </button>
-          <button class="tool-button edit-button" @click="handleClickEdit(contact)">
+          <button class="tool-button edit-button" @click="handleClickEdit(contact.id)">
             <span class="not-visible">Editar {{ contact.name }}</span
             ><IconEdit /></button
           ><button class="tool-button delete-button" @click="handleDelete(contact.id)">

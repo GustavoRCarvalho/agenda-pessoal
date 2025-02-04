@@ -51,11 +51,11 @@ const router = createRouter({
 
 router.beforeEach((to, _from, next) => {
   const AuthStore = useAuthStore()
-  const { accessToken, tokenType } = storeToRefs(AuthStore)
+  const { accessToken, userType } = storeToRefs(AuthStore)
 
   if (to.meta.requiresAuth && accessToken.value === '') {
     next('/login')
-  } else if (to.meta.requiresAdmin && tokenType.value !== 'ROLE-ADMIN') {
+  } else if (to.meta.requiresAdmin && userType.value !== 'ROLE_ADMIN') {
     next('/home')
   } else {
     next()

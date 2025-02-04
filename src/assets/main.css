@@ -125,3 +125,11 @@ body {
     margin-top: 0.5em;
   }
 }
+
+/* https://stackoverflow.com/a/29350537 solução que atrasa a transição do background-color para textos auto preenchidos */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition-delay: 50000s;
+}

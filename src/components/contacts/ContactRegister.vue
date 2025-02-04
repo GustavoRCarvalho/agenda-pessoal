@@ -14,6 +14,11 @@ import { optionsTipoContato } from '@/utils/constants'
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 import IconReload from '../icons/IconReload.vue'
+import { useAlertsStore } from '@/stores/alerts'
+import contactsService from '@/api/contacts'
+
+const AlertsStore = useAlertsStore()
+const { createAlertError, createAlertSucess, createAlertWarning } = AlertsStore
 
 const ModalsStore = useModalsStore()
 const { contactSwitch } = ModalsStore
@@ -31,13 +36,13 @@ const { resetContactRegisterEdit } = RegisterStore
 const { contactRegisterEdit } = storeToRefs(RegisterStore)
 
 const optionsPessoa = ref([])
-const formFields = reactive({ ...contactRegisterEdit.value })
+const formValues = reactive({ ...contactRegisterEdit.value })
 
 //Atualiza os campos reativos do formulário caso seja aberto como um editar
 watch(
   () => contactRegisterEdit.value,
   (newVal) => {
-    Object.assign(formFields, newVal)
+    Object.assign(formValues, newVal)
   },
 )
 
@@ -63,44 +68,54 @@ watch(people, (value) => {
 
 function handleReset(e) {
   e.preventDefault()
-  Object.assign(formFields, contactRegisterEdit.value)
+  Object.assign(formValues, contactRegisterEdit.value)
 }
 
-function handleSubmit(e) {
+async function handleSubmit(e) {
   e.preventDefault()
 
-  if (!formFields.id) {
-    formFields.id = generateUniqueId()
+  if (!formValues.id) {
+    formValues.id = generateUniqueId()
   }
 
   people.value.forEach((value) => {
-    if (formFields.pessoaOption.key === value.id) {
-      formFields.pessoa = value
+    if (formValues.pessoaOption.key === value.id) {
+      formValues.pessoa = value
       return
     }
   })
-  formFields.tipoContato = formFields.tipoContatoOption.key
+  formValues.tipoContato = formValues.tipoContatoOption.key
 
   // como o vue usa reatividade e o contactRegisterEdit inclui elementos reativos dentro do objeto
   // não é possível equiparar os dois valores contidos nos objetos de forma tradicional.
   // por isso a alternativa comum de transformar os objetos em strings e compara-las,
   // isso força o vue a revelar completamente os objetos sem passar nenhuma propriedade reativa
 
-  if (JSON.stringify(contactRegisterEdit.value) === JSON.stringify(formFields)) {
-    console.log('Não alterou')
+  if (JSON.stringify(contactRegisterEdit.value) === JSON.stringify(formValues)) {
+    createAlertWarning('Não houve alteração.')
     return
   }
 
-  formFields.usuario = user.value
+  formValues.usuario = user.value
+
+  try {
+    await contactsService.postContact(formValues)
+    createAlertSucess('Sucesso ao salvar o contato.')
+    contactSwitch()
+  } catch (e) {
+    console.error(e)
+    createAlertError('Erro ao salvar o contato!')
+  }
+
   // post
-  console.log(formFields)
+  console.log(formValues)
 }
 </script>
 <template>
   <ModalBackground @closeModal="contactSwitch">
     <div class="modal-container">
       <h2 class="register-title">
-        {{ formFields.id === null ? 'Cadastrar Novo ' : 'Atualizar ' }}Contato
+        {{ formValues.id === null ? 'Cadastrar Novo ' : 'Atualizar ' }}Contato
       </h2>
       <form class="register-form" v-on:submit="handleSubmit" v-on:reset="handleReset">
         <div class="form-input-container">
@@ -108,7 +123,7 @@ function handleSubmit(e) {
           <div class="form-input-wrapper">
             <InputSelect
               :options="optionsPessoa"
-              v-model="formFields.pessoaOption"
+              v-model="formValues.pessoaOption"
               label="Selecione uma Pessoa"
               name="pessoa"
             />
@@ -123,37 +138,37 @@ function handleSubmit(e) {
           <div class="form-input-wrapper">
             <InputSelect
               :options="optionsTipoContato"
-              v-model="formFields.tipoContatoOption"
+              v-model="formValues.tipoContatoOption"
               label="Tipo de Contato"
               name="type"
             />
             <InputDefault
-              v-if="formFields.tipoContatoOption?.key === 'EMAIL'"
-              v-model="formFields.email"
+              v-if="formValues.tipoContatoOption?.key === 'EMAIL'"
+              v-model="formValues.email"
               type="text"
               label="Email"
               name="email"
               placeholder="seuemail@dominio.com"
             />
             <InputPhone
-              v-if="['CELULAR', 'TELEFONE'].includes(formFields.tipoContatoOption?.key)"
-              v-model="formFields.telefone"
+              v-if="['CELULAR', 'TELEFONE'].includes(formValues.tipoContatoOption?.key)"
+              v-model="formValues.telefone"
             />
           </div>
         </div>
         <div class="form-input-container">
           <span>Outros</span>
           <div class="form-input-wrapper">
-            <InputDefault v-model="formFields.tag" type="text" label="Descrição" name="tag" />
-            <InputCheck v-model="formFields.privado" type="text" label="Privado" name="private" />
+            <InputDefault v-model="formValues.tag" type="text" label="Descrição" name="tag" />
+            <InputCheck v-model="formValues.privado" type="text" label="Privado" name="private" />
           </div>
         </div>
         <div class="form-button-wrapper">
           <button class="default-button" type="reset">
-            {{ formFields.id === null ? 'Limpar' : 'Restaurar' }}
+            {{ formValues.id === null ? 'Limpar' : 'Restaurar' }}
           </button>
           <button class="default-button" type="submit">
-            {{ formFields.id === null ? 'Cadastrar' : 'Salvar' }}
+            {{ formValues.id === null ? 'Cadastrar' : 'Salvar' }}
           </button>
           <button class="close-button" type="button" @click="contactSwitch">
             <span class="not-visible">close</span>X

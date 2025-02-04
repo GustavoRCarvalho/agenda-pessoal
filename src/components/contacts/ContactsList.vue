@@ -5,9 +5,22 @@ import { useRegistersStore } from '@/stores/registers'
 import { storeToRefs } from 'pinia'
 import IconEdit from '../icons/IconEdit.vue'
 import IconTrash from '../icons/IconTrash.vue'
+import IconLock from '../icons/IconLock.vue'
+import IconLockOpen from '../icons/IconLockOpen.vue'
+import { useAlertsStore } from '@/stores/alerts'
+
+const AlertsStore = useAlertsStore()
+const {
+  // createAlertError,
+  createAlertSucess,
+} = AlertsStore
 
 const RegisterStore = useRegistersStore()
-const { changeContactRegisterEdit, resetContactRegisterEdit } = RegisterStore
+const {
+  // changeContactRegisterEdit,
+  changeContactRegisterEditNOGET,
+  resetContactRegisterEdit,
+} = RegisterStore
 
 const ListsStore = useListsStore()
 const { contacts } = storeToRefs(ListsStore)
@@ -15,10 +28,25 @@ const { contacts } = storeToRefs(ListsStore)
 const ModalsStore = useModalsStore()
 const { contactSwitch } = ModalsStore
 
-function handleClickEdit(contact) {
+//
+//  AVISO requisição /contato/listar/{id} retorna 200 mas sem dados
+//
+// async function handleClickEdit(id) {
+//   resetContactRegisterEdit()
+//   try {
+//     await changeContactRegisterEdit(id)
+//     createAlertSucess('Pessoa encontrada com sucesso.')
+//     contactSwitch()
+//   } catch (e) {
+//     createAlertError(e?.message)
+//   }
+// }
+
+function handleClickEditNOGET(contact) {
   resetContactRegisterEdit()
-  changeContactRegisterEdit(contact)
+  changeContactRegisterEditNOGET(contact)
   contactSwitch()
+  createAlertSucess('Pessoa encontrada com sucesso.')
 }
 
 function handleDelete(id) {
@@ -39,16 +67,19 @@ function handleDelete(id) {
     <tbody>
       <tr v-for="contact in contacts" :key="contact.id">
         <td>
-          <span>{{ contact.private ? 'Privado' : 'Público' }}</span
-          >{{ contact.name }}
+          <span>
+            <IconLock v-if="contact.private" />
+            <IconLockOpen v-else
+          /></span>
+          {{ contact.pessoa?.nome }}
         </td>
         <td>{{ contact.tipoContato }}</td>
         <td>
-          <button class="tool-button edit-button" @click="handleClickEdit(contact)">
-            <span class="not-visible">Editar {{ contact.name }}</span
+          <button class="tool-button edit-button" @click="handleClickEditNOGET(contact)">
+            <span class="not-visible">Editar {{ contact.pessoa?.nome }}</span
             ><IconEdit /></button
           ><button class="tool-button delete-button" @click="handleDelete(contact.id)">
-            <span class="not-visible">Deletar {{ contact.name }}</span
+            <span class="not-visible">Deletar {{ contact.pessoa?.nome }}</span
             ><IconTrash />
           </button>
         </td>
@@ -74,7 +105,7 @@ function handleDelete(id) {
       },
       "foto": {
         "id": "string",
-        "name": "string",
+        "nome": "string",
         "type": "string"
       },
       "id": 0,
@@ -92,7 +123,7 @@ function handleDelete(id) {
       "nome": "string",
       "password": "string",
       "telefone": "string",
-      "username": "string"
+      "usernome": "string"
     }
   }
 ] -->

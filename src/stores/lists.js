@@ -1,7 +1,10 @@
-import { listContact, listPeople, listUsers } from '@/utils/mocks'
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'
-import { byteArray } from '../assets/byteArray'
+import usersService from '@/api/users'
+import contactsService from '@/api/contacts'
+import peopleService from '@/api/people'
+import favsService from '@/api/favs'
+import photoService from '@/api/photo'
 
 export const useListsStore = defineStore('lists', {
   state: () => ({
@@ -12,41 +15,26 @@ export const useListsStore = defineStore('lists', {
     photos: reactive({}),
   }),
   actions: {
-    setContacts() {
-      //fetch da lista
-      console.log('fetch da lista de contatos')
-      this.contacts = listContact
+    async setContacts(search = '') {
+      const response = await contactsService.listContacts(search)
+      this.contacts = response.data
     },
-    setPeople() {
-      //fetch da lista
-      console.log('fetch da lista de pessoas')
-      this.people = listPeople
+    async setPeople(search = '') {
+      const response = await peopleService.listPeople(search)
+      this.people = response.data
     },
-    setFavs() {
-      //fetch da lista
-      console.log('fetch da lista de favoritos')
-      this.favs = { [listContact[0].id]: listContact[0] }
+    async setFavs() {
+      const response = await favsService.listFavs()
+      this.favs = response.data
     },
-    setUsers() {
-      //fetch da lista
-      console.log('fetch da lista de usuarios')
-      this.users = listUsers
+    async setUsers(search = '') {
+      const response = await usersService.listUsers(search)
+      this.users = response.data
     },
-    setPhoto(id) {
-      // fetch photo by id
-      if (id !== null && id !== undefined && this.photos[id] === undefined) {
-        console.log('fetch photo by id')
-        this.photos[id] = {
-          byteArray: byteArray,
-          description: 'string',
-          filename: 'string',
-          inputStream: {},
-          open: true,
-          readable: true,
-          uri: 'string',
-          url: 'string',
-        }
-      }
+    async setPhoto(id) {
+      if (!id) return
+      const response = await photoService.findPhoto(id)
+      this.photos[id] = response.data
     },
   },
 })

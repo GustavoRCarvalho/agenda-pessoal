@@ -4,14 +4,6 @@ export function passValidation({ values, errors }) {
   const newErrors = {}
   let isValid = true
 
-  // Limpa os campos iterando pelo objeto
-  // além de que, no final é feito Object.assign, que não é exclusivo, ou seja,
-  // ele altera e adiciona chaves e valores, mas não excluí,
-  // portanto o objeto deve estar vazio para que funcione como esperado
-  Object.keys(errors).forEach((key) => {
-    errors[key] = null
-  })
-
   if (values.password && values.newPassword && values.password === values.newPassword) {
     newErrors.newPassword = 'Nova senha não pode ser igual a senha atual'
     isValid = false
@@ -35,14 +27,6 @@ export function passValidation({ values, errors }) {
 export function userValidation({ values, errors }) {
   const newErrors = {}
   let isValid = true
-
-  // Limpa os campos iterando pelo objeto
-  // além de que, no final é feito Object.assign, que não é exclusivo, ou seja,
-  // ele altera e adiciona chaves e valores, mas não excluí,
-  // portanto o objeto deve estar vazio para que funcione como esperado
-  Object.keys(errors).forEach((key) => {
-    errors[key] = null
-  })
 
   if (
     values.passwordConfirmation &&
@@ -69,19 +53,12 @@ export function peopleValidation({ values, errors }) {
   const newErrors = {}
   let isValid = true
 
-  // Limpa os campos iterando pelo objeto
-  // além de que, no final é feito Object.assign, que não é exclusivo, ou seja,
-  // ele altera e adiciona chaves e valores, mas não excluí,
-  // portanto o objeto deve estar vazio para que funcione como esperado
-  Object.keys(errors).forEach((key) => {
-    errors[key] = null
-  })
-
   if (values.cpf && !verifyCPF(values.cpf)) {
     newErrors.cpf = 'CPF inválido'
     isValid = false
   }
-
-  Object.assign(errors, newErrors)
+  Object.keys(newErrors).forEach((key) => {
+    errors[key] = newErrors[key]
+  })
   return isValid
 }

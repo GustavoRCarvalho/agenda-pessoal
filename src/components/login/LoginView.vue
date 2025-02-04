@@ -23,15 +23,17 @@ async function handleSubmit(e) {
     return
   }
 
-  console.log(formValues)
-  login(formValues)
-    .then(() => {
-      createAlertSucess('Autenticado com sucesso')
-      router.push({ name: 'home' })
-    })
-    .catch((e) => {
-      createAlertError(e)
-    })
+  try {
+    await login(formValues)
+    createAlertSucess('Autenticado com sucesso')
+    router.push({ name: 'home' })
+  } catch (e) {
+    if (e?.status === 401) {
+      createAlertError('Credenciais incorretas!')
+      return
+    }
+    createAlertError(e?.message)
+  }
 }
 </script>
 <template>

@@ -8,6 +8,14 @@ import { generateUniqueId } from '../../utils/functions'
 import InputDefault from '../inputs/InputDefault.vue'
 import InputPhone from '../inputs/InputPhone.vue'
 import { userValidation } from '@/utils/validations'
+import InputDate from '../inputs/InputDate.vue'
+import InputSelect from '../inputs/InputSelect.vue'
+import { optionsTiposUser } from '@/utils/constants'
+import userService from '@/api/users'
+import { useAlertsStore } from '@/stores/alerts'
+
+const AlertsStore = useAlertsStore()
+const { createAlertError, createAlertSucess } = AlertsStore
 
 const ModalsStore = useModalsStore()
 const { userSwitch } = ModalsStore
@@ -19,6 +27,42 @@ const { userRegisterEdit } = storeToRefs(RegisterStore)
 
 const formValues = reactive({ ...userRegisterEdit.value })
 const formErrors = reactive({})
+
+// Limpa o erro caso quando o campo é alterado
+// OBS: preferencialmente deve haver um watch para cada campo com verificação customizada
+watch(formValues, () => {
+  if (formErrors.cpf) {
+    formErrors.cpf = null
+  }
+})
+watch(
+  () => formValues.password,
+  () => {
+    if (formErrors.password) {
+      formErrors.password = null
+    }
+    // Limpa o erro de passwordConfirmation quando a senha original muda
+    if (formErrors.passwordConfirmation) {
+      formErrors.passwordConfirmation = null
+    }
+  },
+)
+watch(
+  () => formValues.passwordConfirmation,
+  () => {
+    if (formErrors.passwordConfirmation) {
+      formErrors.passwordConfirmation = null
+    }
+  },
+)
+watch(
+  () => formValues.email,
+  () => {
+    if (formErrors.email) {
+      formErrors.email = null
+    }
+  },
+)
 
 //Atualiza os campos reativos do formulário caso seja aberto como um editar
 watch(
@@ -43,7 +87,7 @@ function handleReset(e) {
   Object.assign(formValues, userRegisterEdit.value)
 }
 
-function handleSubmit(e) {
+async function handleSubmit(e) {
   e.preventDefault()
 
   if (!userValidation({ values: formValues, errors: formErrors })) {
@@ -53,7 +97,14 @@ function handleSubmit(e) {
     formValues.id = generateUniqueId()
   }
 
-  console.log(formValues)
+  try {
+    await userService.postUser(formValues)
+    createAlertSucess('Sucesso ao salvar o usuário.')
+    userSwitch()
+  } catch (e) {
+    console.error(e)
+    createAlertError('Erro ao salvar o usuário!')
+  }
 }
 </script>
 <template>
@@ -75,20 +126,28 @@ function handleSubmit(e) {
               placeholder="Apelido"
             />
             <InputDefault
+              v-if="!formValues.id"
               v-model="formValues.password"
               :errorMessage="formErrors.password"
               type="password"
-              label="Nova Senha"
+              label="Senha"
               name="new-password"
-              placeholder="Nova Senha"
+              placeholder="Senha"
             />
             <InputDefault
+              v-if="!formValues.id"
               v-model="formValues.passwordConfirmation"
               :errorMessage="formErrors.passwordConfirmation"
               type="password"
-              label="Confirme a Nova Senha"
+              label="Confirme a Senha"
               name="new-password"
-              placeholder="Nova Senha"
+              placeholder="Confirme a Senha"
+            />
+            <InputSelect
+              :options="optionsTiposUser"
+              v-model="formValues.tipoOption"
+              label="Selecione o Tipo"
+              name="tipoOption"
             />
           </div>
         </div>
@@ -112,14 +171,7 @@ function handleSubmit(e) {
               mask="###.###.###-##"
               placeholder="000.000.000-00"
             />
-            <InputDefault
-              v-model="formValues.dataNascimento"
-              type="text"
-              label="Data de Nascimento"
-              name="dataNascimento"
-              mask="####.##.##"
-              placeholder="1970.01.01"
-            />
+            <InputDate v-model="formValues.dataNascimento" />
           </div>
         </div>
         <div class="form-input-container">

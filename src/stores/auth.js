@@ -1,46 +1,40 @@
+import authService from '@/api/auth'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     accessToken: ref(localStorage.getItem('accessToken') ?? ''),
-    tokenType: ref(localStorage.getItem('tokenType') ?? ''),
+    userType: ref(localStorage.getItem('userType') ?? ''),
     id: ref(localStorage.getItem('id') ?? null),
   }),
   actions: {
-    login(credentials) {
+    async login(credentials) {
       //fetch login
-      return new Promise((resolve, reject) => {
-        if (credentials.username !== 'CBA') {
-          setTimeout(() => {
-            const response = { accessToken: 'ABC', id: 1, tokenType: 'ROLE-ADMIN' }
-
-            const { accessToken, id, tokenType } = response
-
-            console.log(response)
-
-            if (credentials.remember) {
-              localStorage.setItem('accessToken', accessToken)
-              localStorage.setItem('tokenType', tokenType)
-              localStorage.setItem('id', id)
-            }
-            this.accessToken = accessToken
-            this.tokenType = tokenType
-            this.id = id
-
-            resolve()
-          }, 1000)
-        } else {
-          reject('Usuário Incorreto')
-        }
+      const response = await authService.login({
+        username: credentials.username,
+        password: credentials.password,
       })
+
+      console.log(response)
+
+      const { accessToken, id, tipos } = response.data
+
+      if (credentials.remember) {
+        localStorage.setItem('accessToken', accessToken)
+        localStorage.setItem('userType', tipos[0])
+        localStorage.setItem('id', id)
+      }
+      this.accessToken = accessToken
+      this.userType = tipos[0]
+      this.id = id
     },
     logout() {
       this.accessToken = ''
-      this.tokenType = ''
+      this.userType = ''
       this.id = null
       localStorage.removeItem('accessToken')
-      localStorage.removeItem('tokenType')
+      localStorage.removeItem('userType')
       localStorage.removeItem('id')
     },
   },

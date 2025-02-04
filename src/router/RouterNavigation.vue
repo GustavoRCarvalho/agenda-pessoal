@@ -6,7 +6,7 @@ import { ref } from 'vue'
 
 const AuthStore = useAuthStore()
 const { logout } = AuthStore
-const { tokenType, accessToken } = storeToRefs(AuthStore)
+const { userType, accessToken } = storeToRefs(AuthStore)
 
 const openNav = ref(false)
 
@@ -28,7 +28,7 @@ function handleClick() {
     <nav>
       <button :class="'close-button'" @click="handleClick"><IconLeft /></button>
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink v-if="tokenType === 'ROLE-ADMIN'" to="/users">Usuários</RouterLink>
+      <RouterLink v-if="userType === 'ROLE_ADMIN'" to="/users">Usuários</RouterLink>
       <RouterLink to="/people">Pessoas</RouterLink>
       <RouterLink to="/contacts">Contatos</RouterLink>
       <RouterLink to="/myRegister">Meu Cadastro</RouterLink>
