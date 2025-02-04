@@ -1,7 +1,7 @@
 import {
   contactFormFields,
   libTipoContato,
-  optionsTiposUser,
+  libTiposUser,
   passFormFields,
   peopleFormFields,
   userFormFields,
@@ -30,8 +30,8 @@ export const useRegistersStore = defineStore('registers', {
       this.contactRegisterEdit = {
         ...contact,
         pessoaOption: {
-          key: contact?.pessoa?.id ?? 0,
-          label: contact?.pessoa?.nome ?? '',
+          key: contact?.pessoa?.id || 0,
+          label: contact?.pessoa?.nome || '',
         },
         tipoContatoOption: {
           key: contact.tipoContato,
@@ -49,8 +49,8 @@ export const useRegistersStore = defineStore('registers', {
     // this.contactRegisterEdit = {
     //   ...response.object,
     //   pessoaOption: {
-    //     key: response.object?.pessoa?.id ?? 0,
-    //     label: response.object?.pessoa?.nome ?? '',
+    //     key: response.object?.pessoa?.id || 0,
+    //     label: response.object?.pessoa?.nome || '',
     //   },
     //   tipoContatoOption: {
     //     key: response.object.tipoContato,
@@ -66,9 +66,10 @@ export const useRegistersStore = defineStore('registers', {
         ...infos.usuario,
         tipoOption: {
           key: infos.tipos[0],
-          label: optionsTiposUser[infos.tipos],
+          label: libTiposUser[infos.tipos],
         },
       }
+      console.log(this.userRegisterEdit)
     },
     resetPeopleRegisterEdit() {
       this.peopleRegisterEdit = peopleFormFields

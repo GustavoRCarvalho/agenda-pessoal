@@ -72,11 +72,11 @@ watch(
     const newValues = await verifyCEP(cep)
 
     if (!newValues?.erro) {
-      formValues.endereco.pais = formValues.endereco.pais ?? 'BR'
-      formValues.endereco.estado = formValues.endereco.estado ?? newValues.estado
-      formValues.endereco.cidade = formValues.endereco.cidade ?? newValues.localidade
-      formValues.endereco.bairro = formValues.endereco.bairro ?? newValues.bairro
-      formValues.endereco.logradouro = formValues.endereco.logradouro ?? newValues.logradouro
+      formValues.endereco.pais = formValues.endereco.pais || 'BR'
+      formValues.endereco.estado = formValues.endereco.estado || newValues.estado
+      formValues.endereco.cidade = formValues.endereco.cidade || newValues.localidade
+      formValues.endereco.bairro = formValues.endereco.bairro || newValues.bairro
+      formValues.endereco.logradouro = formValues.endereco.logradouro || newValues.logradouro
       formErrors['cep'] = null
     } else {
       formErrors['cep'] = 'CEP não encontrado'
@@ -121,7 +121,7 @@ async function handleSubmit(e) {
   if (!formValues.endereco.id) {
     formValues.endereco.id = generateUniqueId()
   }
-  if (formValues.foto.data) {
+  if (formValues.foto?.data) {
     try {
       const response = await photoService.postPhoto(generateUniqueId(), formValues.foto.data)
 

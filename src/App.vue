@@ -9,6 +9,10 @@ import { storeToRefs } from 'pinia'
 import { watch } from 'vue'
 import { useAuthStore } from './stores/auth'
 import router from '@/router'
+import { useAlertsStore } from './stores/alerts'
+
+const AlertsStore = useAlertsStore()
+const { createAlertSucess, createAlertWarning } = AlertsStore
 
 const UserStore = useUserStore()
 const { setUser, unsetUser } = UserStore
@@ -16,15 +20,27 @@ const { setUser, unsetUser } = UserStore
 const AuthStore = useAuthStore()
 const { accessToken, id } = storeToRefs(AuthStore)
 
-onMounted(() => {
+onMounted(async () => {
   if (accessToken && id) {
-    setUser(id)
+    try {
+      await setUser(id.value)
+      createAlertSucess('Dados carregados com sucesso!')
+    } catch (e) {
+      console.error(e)
+      createAlertWarning('Não foi possível carregar os dados!')
+    }
   }
 })
 
-watch(id, (newId) => {
+watch(id, async (newId) => {
   if (newId) {
-    setUser(newId)
+    try {
+      await setUser(newId)
+      createAlertSucess('Dados carregados com sucesso!')
+    } catch (e) {
+      console.error(e)
+      createAlertWarning('Não foi possível carregar os dados!')
+    }
   } else {
     unsetUser()
   }

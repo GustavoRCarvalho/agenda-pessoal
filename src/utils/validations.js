@@ -4,10 +4,12 @@ export function passValidation({ values, errors }) {
   const newErrors = {}
   let isValid = true
 
-  if (values.password && values.newPassword && values.password === values.newPassword) {
-    newErrors.newPassword = 'Nova senha não pode ser igual a senha atual'
-    isValid = false
-  }
+  // validação de senhas iguais depende do reconhecimento do metodo de hash utilizado
+  // por enquanto desabilitada
+  // if (values.password && values.newPassword && values.password === values.newPassword) {
+  //   newErrors.newPassword = 'Nova senha não pode ser igual a senha atual'
+  //   isValid = false
+  // }
   if (values.newPassword && /[^A-Za-z0-9]/.test(values.newPassword)) {
     newErrors.newPassword = 'Senha deve conter apenas letras e/ou números'
     isValid = false

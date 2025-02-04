@@ -4,9 +4,9 @@ import { ref } from 'vue'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    accessToken: ref(localStorage.getItem('accessToken') ?? ''),
-    userType: ref(localStorage.getItem('userType') ?? ''),
-    id: ref(localStorage.getItem('id') ?? null),
+    accessToken: ref(localStorage.getItem('accessToken') || ''),
+    userType: ref(localStorage.getItem('userType') || ''),
+    id: ref(localStorage.getItem('id') || null),
   }),
   actions: {
     async login(credentials) {

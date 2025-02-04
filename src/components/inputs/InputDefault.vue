@@ -37,7 +37,7 @@ watch(props, () => {
   if (!inputRef.value || inputRef.value.value === '') {
     return
   }
-  const message = props?.errorMessage ?? ''
+  const message = props?.errorMessage || ''
 
   // Altera a mensagem de validação do input
   inputRef.value.setCustomValidity(message)

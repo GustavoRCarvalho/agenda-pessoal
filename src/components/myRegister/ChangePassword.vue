@@ -4,13 +4,21 @@ import { useRegistersStore } from '@/stores/registers'
 import ModalBackground from '@/router/ModalBackground.vue'
 import { reactive, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { generateUniqueId } from '../../utils/functions'
 import InputDefault from '../inputs/InputDefault.vue'
 import { passValidation } from '@/utils/validations'
+import { useUserStore } from '@/stores/user'
+import { useAlertsStore } from '@/stores/alerts'
+import userService from '@/api/users'
+
+const AlertsStore = useAlertsStore()
+const { createAlertError, createAlertSucess } = AlertsStore
 
 const ModalsStore = useModalsStore()
 const { passSwitch } = ModalsStore
 const { passModal } = storeToRefs(ModalsStore)
+
+const UserStore = useUserStore()
+const { user } = storeToRefs(UserStore)
 
 const RegisterStore = useRegistersStore()
 const { resetPassRegisterEdit } = RegisterStore
@@ -18,6 +26,30 @@ const { passRegisterEdit } = storeToRefs(RegisterStore)
 
 const formValues = reactive({ ...passRegisterEdit.value })
 const formErrors = reactive({})
+
+// Limpa o erro caso quando o campo é alterado
+// OBS: preferencialmente deve haver um watch para cada campo com verificação customizada
+watch(
+  () => formValues.newPassword,
+  () => {
+    if (formErrors.newPassword) {
+      formErrors.newPassword = null
+    }
+    // Limpa o erro de passwordConfirmation quando a senha original muda
+    if (formErrors.newPasswordConfirmation) {
+      formErrors.newPasswordConfirmation = null
+    }
+  },
+)
+
+watch(
+  () => formValues.newPasswordConfirmation,
+  () => {
+    if (formErrors.newPasswordConfirmation) {
+      formErrors.newPasswordConfirmation = null
+    }
+  },
+)
 
 //Atualiza os campos reativos do formulário caso seja aberto como um editar
 watch(
@@ -37,30 +69,31 @@ watch(
   },
 )
 
-watch(
-  () => formValues.newPassword,
-  (newPassword) => {
-    if (newPassword && formErrors['newPasswordConfirmation']) {
-      formErrors['newPasswordConfirmation'] = null
-    }
-  },
-)
-
 function handleReset(e) {
   e.preventDefault()
   Object.assign(formValues, passRegisterEdit.value)
 }
 
-function handleSubmit(e) {
+async function handleSubmit(e) {
   e.preventDefault()
 
   if (!passValidation({ values: formValues, errors: formErrors })) {
     return
   }
-  if (!formValues.id) {
-    formValues.id = generateUniqueId()
-  }
+  formValues.id = user.value.id
+  formValues.username = user.value.username
 
+  try {
+    await userService.changePassword(formValues)
+    createAlertSucess('Sucesso ao salvar o usuário.')
+    passSwitch()
+  } catch (e) {
+    console.error(e)
+    if (e.status === 404 || e?.response?.data?.message) {
+      createAlertError('Erro ao salvar o usuário!')
+    }
+    createAlertError(e?.response?.data?.message)
+  }
   console.log(formValues)
 }
 </script>

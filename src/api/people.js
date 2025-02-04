@@ -5,23 +5,18 @@ export default {
     return http.post('/pessoa/pesquisar/', { nome: search })
   },
   postPeople(people) {
-    const {
-      foto: { data: _data, ...foto },
-      ...body
-    } = people
-
     const normalizeForm = {
-      ...body,
-      id: Number(body.id),
+      ...people,
+      id: Number(people.id),
       endereco: {
-        ...body.endereco,
-        id: Number(body.endereco.id),
-        numero: Number(body.endereco.numero),
+        ...people.endereco,
+        id: Number(people.endereco.id),
+        numero: Number(people.endereco.numero),
       },
-      foto: foto?.id
+      foto: people?.foto?.id
         ? {
-            ...foto,
-            id: String(foto.id),
+            ...people?.foto,
+            id: String(people?.foto.id),
           }
         : null,
     }

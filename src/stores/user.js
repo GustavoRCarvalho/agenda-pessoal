@@ -1,24 +1,23 @@
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'
+import usersService from '@/api/users'
+import { libTiposUser, userFormFields } from '@/utils/constants'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    user: reactive({}),
+    user: reactive(userFormFields),
   }),
   actions: {
-    setUser(id) {
-      //fetch pelo id
-      if (id) {
-        this.user = {
-          id: 1,
-          nome: 'Lorem Ipsum',
-          email: 'email@email.com',
-          telefone: '(23) 9 9999-9999',
-          cpf: '000-000-000-00',
-          dataNascimento: '2025-11-11',
-          username: 'username',
-          password: 'senha',
-        }
+    async setUser(id) {
+      const response = await usersService.findUser(id)
+      const infos = response.data.object
+
+      this.user = {
+        ...infos.usuario,
+        tipoOption: {
+          key: infos.tipos[0],
+          label: libTiposUser[infos.tipos],
+        },
       }
     },
     unsetUser() {

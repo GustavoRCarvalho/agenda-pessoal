@@ -7,15 +7,34 @@ import InputDefault from '../inputs/InputDefault.vue'
 import InputPhone from '../inputs/InputPhone.vue'
 import InputDate from '../inputs/InputDate.vue'
 import { userValidation } from '@/utils/validations'
+import userService from '@/api/users'
+import { useAlertsStore } from '@/stores/alerts'
+
+const AlertsStore = useAlertsStore()
+const { createAlertError, createAlertSucess } = AlertsStore
 
 const ModalsStore = useModalsStore()
 const { passSwitch } = ModalsStore
 
 const UserStore = useUserStore()
+const { setUser } = UserStore
 const { user } = storeToRefs(UserStore)
 
 const formValues = reactive({ ...user.value })
 const formErrors = reactive({})
+
+// Limpa o erro caso quando o campo é alterado
+// OBS: preferencialmente deve haver um watch para cada campo com verificação customizada
+watch(formValues, () => {
+  if (formErrors.cpf) {
+    formErrors.cpf = null
+  }
+})
+watch(formValues, () => {
+  if (formErrors.email) {
+    formErrors.email = null
+  }
+})
 
 //Atualiza os campos reativos do formulário caso acha alteração no usuário
 watch(
@@ -30,13 +49,24 @@ function handleReset(e) {
   Object.assign(formValues, user.value)
 }
 
-function handleSubmit(e) {
+async function handleSubmit(e) {
   e.preventDefault()
 
   if (!userValidation({ values: formValues, errors: formErrors })) {
     return
   }
 
+  try {
+    await userService.putUser(formValues)
+    await setUser(formValues.id)
+    createAlertSucess('Sucesso ao atualizar!')
+  } catch (e) {
+    console.error(e)
+    if (e.status === 404) {
+      createAlertError('Erro ao atualizar o usuário!')
+    }
+    createAlertError(e?.response?.data?.message)
+  }
   console.log(formValues)
 }
 </script>
@@ -77,7 +107,7 @@ function handleSubmit(e) {
       <div class="form-input-wrapper">
         <InputDefault
           v-model="formValues.email"
-          :errorMessage="formErrors.cpf"
+          :errorMessage="formErrors.email"
           type="text"
           label="Email"
           name="email"

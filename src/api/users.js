@@ -5,16 +5,16 @@ export default {
     return http.post('/usuario/pesquisar', { termo: search })
   },
   postUser(user) {
-    const { tipoOption: _tipoOption, ...body } = user
+    const { tipoOption: _tipoOption, passwordsConfirmation: _passwordsConfirmation, ...body } = user
 
     const normalizeUser = {
       tipos: [user.tipoOption.key],
       usuario: {
         ...body,
-        id: Number(user.id),
       },
     }
 
+    console.log(normalizeUser)
     return http.post('/usuario/salvar', normalizeUser)
   },
   changePassword(passwords) {

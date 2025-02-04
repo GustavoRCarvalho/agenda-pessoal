@@ -4,7 +4,6 @@ import { useRegistersStore } from '@/stores/registers'
 import ModalBackground from '@/router/ModalBackground.vue'
 import { reactive, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { generateUniqueId } from '../../utils/functions'
 import InputDefault from '../inputs/InputDefault.vue'
 import InputPhone from '../inputs/InputPhone.vue'
 import { userValidation } from '@/utils/validations'
@@ -93,9 +92,6 @@ async function handleSubmit(e) {
   if (!userValidation({ values: formValues, errors: formErrors })) {
     return
   }
-  if (!formValues.id) {
-    formValues.id = generateUniqueId()
-  }
 
   try {
     await userService.postUser(formValues)
@@ -103,7 +99,10 @@ async function handleSubmit(e) {
     userSwitch()
   } catch (e) {
     console.error(e)
-    createAlertError('Erro ao salvar o usuário!')
+    if (e.status === 404 || e?.response?.data?.message) {
+      createAlertError('Erro ao salvar o usuário!')
+    }
+    createAlertError(e?.response?.data?.message)
   }
 }
 </script>
