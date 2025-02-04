@@ -22,7 +22,7 @@ Hoje este é um tópico sensível, então serei direto, não utilizei qualquer I
 
 ### API
 
-[lodash](https://www.npmjs.com/package/lodash) *OBS.: Utilizada para fazer debounce em casos especificos*
+[lodash](https://www.npmjs.com/package/lodash) *OBS.: Utilizada para fazer debounce em casos especificos
 [axios](https://www.npmjs.com/package/axios)
 
 ### Formulários
