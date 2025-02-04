@@ -9,7 +9,7 @@ export default {
 
     const normalizeUser = {
       ...body,
-      id: body.id ? Number(body.id) : null,
+      id: body.id || null,
     }
     return http.post('/contato/salvar/', normalizeUser)
   },
