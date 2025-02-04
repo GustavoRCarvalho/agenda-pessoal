@@ -22,22 +22,22 @@ Hoje este é um tópico sensível, então serei direto, não utilizei qualquer I
 
 ### API
 
-(https://www.npmjs.com/package/lodash)[lodash] *OBS.: Utilizada para fazer debounce em casos especificos*
-(https://www.npmjs.com/package/axios)[axios] 
+[lodash](https://www.npmjs.com/package/lodash) *OBS.: Utilizada para fazer debounce em casos especificos*
+[axios](https://www.npmjs.com/package/axios)
 
 ### Formulários
 
-(https://www.npmjs.com/package/vue-select)[vue-select]
-(https://www.npmjs.com/package/vue-the-mask)[vue-the-mask] 
+[vue-select](https://www.npmjs.com/package/vue-select)
+[vue-the-mask](https://www.npmjs.com/package/vue-the-mask)
 
 ### Estados e Rotas
 
-(https://www.npmjs.com/package/vue-router)[vue-router]
-(https://www.npmjs.com/package/pinia)[pinia] 
+[vue-router](https://www.npmjs.com/package/vue-router)
+[pinia](https://www.npmjs.com/package/pinia)
 
 ### Icons
 
-Icons são da (https://www.radix-ui.com/icons)[radix-ui]
+Icons são da [radix-ui](https://www.radix-ui.com/icons)
 
 ## Project Setup
 
