@@ -60,6 +60,7 @@ export async function verifyCEP(cepString) {
   return resp
 }
 
+// https://github.com/judgewest2000/IonicAssetToBlobExample/blob/master/src/pages/home/home.ts
 export function b64toBlob(b64Data, contentType, sliceSize) {
   contentType = contentType || ''
   sliceSize = sliceSize || 512
