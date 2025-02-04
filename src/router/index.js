@@ -53,7 +53,7 @@ router.beforeEach((to, _from, next) => {
   const AuthStore = useAuthStore()
   const { accessToken, userType } = storeToRefs(AuthStore)
 
-  if (to.meta.requiresAuth && accessToken.value === '') {
+  if (to.meta.requiresAuth && !accessToken.value) {
     next('/login')
   } else if (to.meta.requiresAdmin && userType.value !== 'ROLE_ADMIN') {
     next('/home')

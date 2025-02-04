@@ -21,7 +21,7 @@ const AuthStore = useAuthStore()
 const { accessToken, id } = storeToRefs(AuthStore)
 
 onMounted(async () => {
-  if (accessToken && id) {
+  if (accessToken.value && id.value) {
     try {
       await setUser(id.value)
       createAlertSucess('Dados carregados com sucesso!')

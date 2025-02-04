@@ -17,19 +17,23 @@ export const useAuthStore = defineStore('auth', {
 
       const { accessToken, id, tipos } = response.data
 
+      this.accessToken = accessToken
+      this.userType = tipos[0]
+      this.id = id
+
+      sessionStorage.setItem('accessToken', accessToken)
+
       if (credentials.remember) {
         localStorage.setItem('accessToken', accessToken)
         localStorage.setItem('userType', tipos[0])
         localStorage.setItem('id', id)
       }
-      this.accessToken = accessToken
-      this.userType = tipos[0]
-      this.id = id
     },
     logout() {
       this.accessToken = ''
       this.userType = ''
       this.id = null
+      sessionStorage.removeItem('accessToken')
       localStorage.removeItem('accessToken')
       localStorage.removeItem('userType')
       localStorage.removeItem('id')

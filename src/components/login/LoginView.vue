@@ -6,6 +6,7 @@ import { passValidation } from '@/utils/validations'
 import { useAuthStore } from '@/stores/auth'
 import { useAlertsStore } from '@/stores/alerts'
 import router from '@/router'
+import { watch } from 'vue'
 
 const AuthStore = useAuthStore()
 const { login } = AuthStore
@@ -15,6 +16,16 @@ const { createAlertError, createAlertSucess } = AlertsStore
 
 const formValues = reactive({})
 const formErrors = reactive({})
+
+// Limpa o erro caso quando o campo é alterado
+watch(
+  () => formValues.password,
+  () => {
+    if (formErrors.password) {
+      formErrors.password = null
+    }
+  },
+)
 
 async function handleSubmit(e) {
   e.preventDefault()
@@ -47,7 +58,7 @@ async function handleSubmit(e) {
     /><InputDefault
       v-model="formValues.password"
       :error-message="formErrors.password"
-      type="current-password"
+      type="password"
       label="Senha"
       name="password"
     />
