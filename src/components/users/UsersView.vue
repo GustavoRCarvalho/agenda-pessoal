@@ -7,6 +7,10 @@ import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import { useListsStore } from '@/stores/lists'
 import IconReload from '../icons/IconReload.vue'
+import { useAlertsStore } from '@/stores/alerts'
+
+const AlertsStore = useAlertsStore()
+const { createAlertError, createAlertSucess } = AlertsStore
 
 const store = useModalsStore()
 const { userSwitch } = store
@@ -20,6 +24,18 @@ const search = ref('')
 onMounted(() => {
   if (users.value?.length === 0) setUsers()
 })
+
+async function handleReload() {
+  try {
+    await setUsers()
+    createAlertSucess('Lista de usuários recarregada com sucesso.')
+  } catch (e) {
+    if (e.status === 404 || e?.response?.data?.message) {
+      createAlertError('Erro ao recarregar lista!')
+    }
+    createAlertError(e?.response?.data?.message)
+  }
+}
 </script>
 <template>
   <div class="top-wrapper">
@@ -37,7 +53,7 @@ onMounted(() => {
     <button
       type="button"
       class="reload-button"
-      @click="setPeople"
+      @click="handleReload"
       title="Recarregar Lista de Usuários"
     >
       <span class="not-visible">Recarregar lista de Usuários</span>

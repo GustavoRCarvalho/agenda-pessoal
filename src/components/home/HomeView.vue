@@ -8,6 +8,10 @@ import { storeToRefs } from 'pinia'
 import HomeList from './HomeList.vue'
 import { watch } from 'vue'
 import IconReload from '../icons/IconReload.vue'
+import { useAlertsStore } from '@/stores/alerts'
+
+const AlertsStore = useAlertsStore()
+const { createAlertError, createAlertSucess } = AlertsStore
 
 const store = useModalsStore()
 const { contactSwitch } = store
@@ -28,6 +32,19 @@ watch(contacts, (value) => {
     setPhoto(pessoa?.foto?.id)
   })
 })
+
+async function handleReload() {
+  try {
+    await setContacts()
+    await setFavs()
+    createAlertSucess('Lista de contatos e favoritos recarregada com sucesso.')
+  } catch (e) {
+    if (e.status === 404 || e?.response?.data?.message) {
+      createAlertError('Erro ao recarregar lista!')
+    }
+    createAlertError(e?.response?.data?.message)
+  }
+}
 </script>
 <template>
   <div class="top-wrapper">
@@ -48,7 +65,7 @@ watch(contacts, (value) => {
       type="button"
       class="reload-button"
       title="Recarregar Lista de Contatos"
-      @click="setContacts"
+      @click="handleReload"
     >
       <span class="not-visible">Recarregar lista de Contatos</span>
       <IconReload />

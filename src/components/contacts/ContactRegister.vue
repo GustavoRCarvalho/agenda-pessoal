@@ -70,6 +70,18 @@ function handleReset(e) {
   Object.assign(formValues, contactRegisterEdit.value)
 }
 
+async function handleReload() {
+  try {
+    await setPeople()
+    createAlertSucess('Lista de pessoas recarregada com sucesso.')
+  } catch (e) {
+    if (e.status === 404 || e?.response?.data?.message) {
+      createAlertError('Erro ao recarregar lista!')
+    }
+    createAlertError(e?.response?.data?.message)
+  }
+}
+
 async function handleSubmit(e) {
   e.preventDefault()
 
@@ -111,7 +123,7 @@ async function handleSubmit(e) {
               label="Selecione uma Pessoa"
               name="pessoa"
             />
-            <button type="button" class="reload-button" @click="setPeople">
+            <button type="button" class="reload-button" @click="handleReload">
               <span class="not-visible">Recarregar lista de Pessoas</span>
               <IconReload />
             </button>

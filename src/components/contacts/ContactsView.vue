@@ -7,6 +7,10 @@ import { ref } from 'vue'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import IconReload from '../icons/IconReload.vue'
+import { useAlertsStore } from '@/stores/alerts'
+
+const AlertsStore = useAlertsStore()
+const { createAlertError, createAlertSucess } = AlertsStore
 
 const store = useModalsStore()
 const { contactSwitch } = store
@@ -20,6 +24,18 @@ const search = ref('')
 onMounted(() => {
   if (contacts.value?.length === 0) setContacts()
 })
+
+async function handleReload() {
+  try {
+    await setContacts()
+    createAlertSucess('Lista de contatos recarregada com sucesso.')
+  } catch (e) {
+    if (e.status === 404 || e?.response?.data?.message) {
+      createAlertError('Erro ao recarregar lista!')
+    }
+    createAlertError(e?.response?.data?.message)
+  }
+}
 </script>
 <template>
   <div class="top-wrapper">
@@ -40,7 +56,7 @@ onMounted(() => {
       type="button"
       class="reload-button"
       title="Recarregar Lista de Contatos"
-      @click="setContacts"
+      @click="handleReload"
     >
       <span class="not-visible">Recarregar lista de Contatos</span>
       <IconReload />
