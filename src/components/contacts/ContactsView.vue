@@ -10,6 +10,7 @@ import IconReload from '../icons/IconReload.vue'
 import { useAlertsStore } from '@/stores/alerts'
 import { watch } from 'vue'
 import { debounce } from 'lodash'
+import { onUnmounted } from 'vue'
 
 const AlertsStore = useAlertsStore()
 const { createAlertError, createAlertSucess } = AlertsStore
@@ -25,6 +26,12 @@ const search = ref('')
 
 onMounted(() => {
   if (contacts.value?.length === 0) setContacts()
+})
+
+onUnmounted(() => {
+  if (search.value) {
+    setContacts()
+  }
 })
 
 watch(

@@ -10,6 +10,7 @@ import { watch } from 'vue'
 import IconReload from '../icons/IconReload.vue'
 import { useAlertsStore } from '@/stores/alerts'
 import { debounce } from 'lodash'
+import { onUnmounted } from 'vue'
 
 const AlertsStore = useAlertsStore()
 const { createAlertError, createAlertSucess } = AlertsStore
@@ -25,6 +26,12 @@ const search = ref('')
 
 onMounted(() => {
   if (people.value?.length === 0) setPeople()
+})
+
+onUnmounted(() => {
+  if (search.value) {
+    setPeople()
+  }
 })
 
 watch(people, (value) => {
