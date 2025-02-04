@@ -172,7 +172,9 @@ main {
   margin-top: 5em;
 
   max-width: 1400px;
-  min-height: calc(100dvh - 7em);
+  height: calc(100dvh - 7em);
+
+  overflow-y: auto;
 
   border: 1px solid var(--color-gray-border);
   border-radius: 0.8em;
