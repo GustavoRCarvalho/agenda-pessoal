@@ -23,11 +23,8 @@ export default {
     const { tipoOption: _tipoOption, ...body } = user
 
     const normalizeUser = {
-      tipos: [user.tipoOption.key],
-      usuario: {
-        ...body,
-        id: Number(user.id),
-      },
+      ...body,
+      id: Number(user.id),
     }
 
     return http.put('/usuario/atualizar', normalizeUser)
