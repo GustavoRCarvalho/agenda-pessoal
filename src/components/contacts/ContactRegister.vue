@@ -5,7 +5,6 @@ import { useRegistersStore } from '@/stores/registers'
 import ModalBackground from '@/router/ModalBackground.vue'
 import { reactive, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { generateUniqueId } from '../../utils/functions'
 import InputDefault from '../inputs/InputDefault.vue'
 import InputCheck from '../inputs/InputCheck.vue'
 import InputSelect from '../inputs/InputSelect.vue'
@@ -18,7 +17,7 @@ import { useAlertsStore } from '@/stores/alerts'
 import contactsService from '@/api/contacts'
 
 const AlertsStore = useAlertsStore()
-const { createAlertError, createAlertSucess, createAlertWarning } = AlertsStore
+const { createAlertError, createAlertSucess } = AlertsStore
 
 const ModalsStore = useModalsStore()
 const { contactSwitch } = ModalsStore
@@ -74,10 +73,6 @@ function handleReset(e) {
 async function handleSubmit(e) {
   e.preventDefault()
 
-  if (!formValues.id) {
-    formValues.id = generateUniqueId()
-  }
-
   people.value.forEach((value) => {
     if (formValues.pessoaOption.key === value.id) {
       formValues.pessoa = value
@@ -85,17 +80,6 @@ async function handleSubmit(e) {
     }
   })
   formValues.tipoContato = formValues.tipoContatoOption.key
-
-  // como o vue usa reatividade e o contactRegisterEdit inclui elementos reativos dentro do objeto
-  // não é possível equiparar os dois valores contidos nos objetos de forma tradicional.
-  // por isso a alternativa comum de transformar os objetos em strings e compara-las,
-  // isso força o vue a revelar completamente os objetos sem passar nenhuma propriedade reativa
-
-  if (JSON.stringify(contactRegisterEdit.value) === JSON.stringify(formValues)) {
-    createAlertWarning('Não houve alteração.')
-    return
-  }
-
   formValues.usuario = user.value
 
   try {
@@ -106,9 +90,6 @@ async function handleSubmit(e) {
     console.error(e)
     createAlertError('Erro ao salvar o contato!')
   }
-
-  // post
-  console.log(formValues)
 }
 </script>
 <template>

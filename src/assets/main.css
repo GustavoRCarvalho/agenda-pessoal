@@ -48,6 +48,9 @@ body {
   width: 1.5em;
 }
 
+.icon-private {
+  color: red;
+}
 .not-visible:not(:focus):not(:active) {
   position: absolute;
 

@@ -9,6 +9,8 @@ import IconEdit from '../icons/IconEdit.vue'
 import IconTrash from '../icons/IconTrash.vue'
 import IconStarFilled from '../icons/IconStarFilled.vue'
 import { useAlertsStore } from '@/stores/alerts'
+import favsService from '@/api/favs'
+import contactsService from '@/api/contacts'
 
 const AlertsStore = useAlertsStore()
 const { createAlertError, createAlertSucess } = AlertsStore
@@ -17,6 +19,7 @@ const RegisterStore = useRegistersStore()
 const { changeContactRegisterEdit, resetContactRegisterEdit } = RegisterStore
 
 const ListsStore = useListsStore()
+const { setContacts } = ListsStore
 const { contacts, favs, photos } = storeToRefs(ListsStore)
 
 const ModalsStore = useModalsStore()
@@ -34,12 +37,45 @@ async function handleClickEdit(id) {
   }
 }
 
-function handleDelete(id) {
-  console.log(id)
+async function handleDelete(id) {
+  if (id) {
+    try {
+      await contactsService.deleteContact(id)
+      createAlertSucess('Sucesso ao excluir o contato.')
+      setContacts()
+    } catch (e) {
+      if (e.status === 404 || e?.response?.data?.message) {
+        createAlertError('Erro ao salvar o usuário!')
+      }
+      createAlertError(e?.response?.data?.message)
+    }
+  }
 }
 
-function handleFav(id) {
-  console.log(id)
+async function handleFav(contact) {
+  if (!favs.value[contact.id]) {
+    try {
+      await favsService.postFavs(contact)
+      createAlertSucess('Sucesso ao adicionar novo favorito.')
+      favs.value[contact.id] = contact
+    } catch (e) {
+      if (e.status === 404 || e?.response?.data?.message) {
+        createAlertError('Erro ao adicionar favorito!')
+      }
+      createAlertError(e?.response?.data?.message)
+    }
+  } else {
+    try {
+      await favsService.deleteFavs(contact.id)
+      favs.value[contact.id] = null
+      createAlertSucess('Sucesso ao remover favorito.')
+    } catch (e) {
+      if (e.status === 404 || e?.response?.data?.message) {
+        createAlertError('Erro ao remover favorito!')
+      }
+      createAlertError(e?.response?.data?.message)
+    }
+  }
 }
 </script>
 <template>
@@ -72,7 +108,7 @@ function handleFav(id) {
           <button
             class="tool-button edit-button"
             :class="favs[contact.id] && 'isFav'"
-            @click="handleFav(contact.id)"
+            @click="handleFav(contact)"
           >
             <span class="not-visible">Favoritar {{ contact.name }}</span
             ><IconStarFilled v-if="favs[contact.id]" />

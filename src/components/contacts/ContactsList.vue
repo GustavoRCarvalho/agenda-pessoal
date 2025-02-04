@@ -8,12 +8,10 @@ import IconTrash from '../icons/IconTrash.vue'
 import IconLock from '../icons/IconLock.vue'
 import IconLockOpen from '../icons/IconLockOpen.vue'
 import { useAlertsStore } from '@/stores/alerts'
+import contactsService from '@/api/contacts'
 
 const AlertsStore = useAlertsStore()
-const {
-  // createAlertError,
-  createAlertSucess,
-} = AlertsStore
+const { createAlertError, createAlertSucess } = AlertsStore
 
 const RegisterStore = useRegistersStore()
 const {
@@ -23,6 +21,7 @@ const {
 } = RegisterStore
 
 const ListsStore = useListsStore()
+const { setContacts } = ListsStore
 const { contacts } = storeToRefs(ListsStore)
 
 const ModalsStore = useModalsStore()
@@ -49,9 +48,18 @@ function handleClickEditNOGET(contact) {
   createAlertSucess('Pessoa encontrada com sucesso.')
 }
 
-function handleDelete(id) {
+async function handleDelete(id) {
   if (id) {
-    console.log(id)
+    try {
+      await contactsService.deleteContact(id)
+      createAlertSucess('Sucesso ao excluir o contato.')
+      setContacts()
+    } catch (e) {
+      if (e.status === 404 || e?.response?.data?.message) {
+        createAlertError('Erro ao salvar o usuário!')
+      }
+      createAlertError(e?.response?.data?.message)
+    }
   }
 }
 </script>
@@ -68,7 +76,7 @@ function handleDelete(id) {
       <tr v-for="contact in contacts" :key="contact.id">
         <td>
           <span>
-            <IconLock v-if="contact.private" />
+            <IconLock v-if="contact.privado" class="icon-private" />
             <IconLockOpen v-else
           /></span>
           {{ contact.pessoa?.nome }}

@@ -10,7 +10,7 @@ export const useListsStore = defineStore('lists', {
   state: () => ({
     contacts: reactive([]),
     people: reactive([]),
-    favs: reactive([]),
+    favs: reactive({}),
     users: reactive([]),
     photos: reactive({}),
   }),
@@ -25,7 +25,10 @@ export const useListsStore = defineStore('lists', {
     },
     async setFavs() {
       const response = await favsService.listFavs()
-      this.favs = response.data
+
+      response?.data?.forEach((contact) => {
+        this.favs[contact?.id] = contact
+      })
     },
     async setUsers(search = '') {
       const response = await usersService.listUsers(search)
@@ -33,8 +36,10 @@ export const useListsStore = defineStore('lists', {
     },
     async setPhoto(id) {
       if (!id) return
-      const response = await photoService.findPhoto(id)
-      this.photos[id] = response.data
+      if (!this.photos[id]) {
+        // const response = await photoService.findPhoto(id)
+        // this.photos[id] = response.data
+      }
     },
   },
 })

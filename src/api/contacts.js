@@ -7,7 +7,11 @@ export default {
   postContact(contact) {
     const { tipoContatoOption: _tipoContatoOption, pessoaOption: _pessoaOption, ...body } = contact
 
-    return http.post('/contato/salvar/', body)
+    const normalizeUser = {
+      ...body,
+      id: Number(body.id),
+    }
+    return http.post('/contato/salvar/', normalizeUser)
   },
   deleteContact(id) {
     return http.delete(`/contato/remover/${id}`)

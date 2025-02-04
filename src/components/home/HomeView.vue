@@ -20,7 +20,7 @@ const search = ref('')
 
 onMounted(() => {
   if (contacts.value?.length === 0) setContacts()
-  if (favs.value?.length === 0) setFavs()
+  if (Object.keys(favs.value)?.length === 0) setFavs()
 })
 
 watch(contacts, (value) => {
