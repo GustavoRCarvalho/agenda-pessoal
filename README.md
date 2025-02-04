@@ -4,7 +4,7 @@ Agenda Pessoal (Demo Metaway)
 
 ### Considerações iniciais
 
-Foi muito satisfatório produzir este mini projeto, levou ao todo uma semana (entorno de 3h/dia) e agora ao final (04/02 - 15h) apenas uma funcionalidade não está 100% funcional, que é o upload de fotos, as respostas do servidor para a requisição do post de fotos retornavam 500 então após algumas tentativas eu abri mão da funcionalidade temporariamente.
+Foi muito satisfatório produzir este mini projeto, levou ao todo uma semana (em torno de 3h/dia) e agora ao final (04/02 - 15h) apenas uma funcionalidade não está 100% funcional, que é o upload de fotos, as respostas do servidor para a requisição do post de fotos retornavam 500 então após algumas tentativas eu abri mão da funcionalidade temporariamente.
 
 Do mais, espero que o código esteja satisfatório e desejo boa exploração e leitura para quem irá se aventurar nesta tarefa (deixei muitos comentários nas partes que achei precisarem de mais explicação ou que quis explicar o raciocínio)
 
