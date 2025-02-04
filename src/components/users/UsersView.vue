@@ -79,4 +79,3 @@ async function handleReload() {
   </div>
   <UsersList />
 </template>
-<style scoped></style>

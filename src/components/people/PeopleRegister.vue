@@ -265,24 +265,3 @@ async function handleSubmit(e) {
     </div>
   </ModalBackground>
 </template>
-<style scoped></style>
-<!-- {
-  "cpf": "string",
-  "endereco": {
-    "bairro": "string",
-    "cep": "string",
-    "cidade": "string",
-    "estado": "string",
-    "id": 0,
-    "logradouro": "string",
-    "numero": 0,
-    "pais": "string"
-  },
-  "foto": {
-    "id": "string",
-    "name": "string",
-    "type": "string"
-  },
-  "id": 0,
-  "nome": "string"
-} -->

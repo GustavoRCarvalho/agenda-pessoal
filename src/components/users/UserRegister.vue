@@ -206,4 +206,3 @@ async function handleSubmit(e) {
     </div>
   </ModalBackground>
 </template>
-<style scoped></style>

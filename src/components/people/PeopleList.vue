@@ -86,25 +86,3 @@ async function handleDelete(id) {
   </table>
   <span class="not-found" v-if="!people.length">Nenhuma pessoa encontrada</span>
 </template>
-<!-- [
-  {
-    "cpf": "string",
-    "endereco": {
-      "bairro": "string",
-      "cep": "string",
-      "cidade": "string",
-      "estado": "string",
-      "id": 0,
-      "logradouro": "string",
-      "numero": 0,
-      "pais": "string"
-    },
-    "foto": {
-      "id": "string",
-      "name": "string",
-      "type": "string"
-    },
-    "id": 0,
-    "nome": "string"
-  }
-] -->

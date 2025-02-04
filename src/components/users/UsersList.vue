@@ -52,15 +52,3 @@ async function handleClickEdit(id) {
     </tbody>
   </table>
 </template>
-<!-- [
-  {
-    "cpf": "string",
-    "dataNascimento": "2025-01-28",
-    "email": "string",
-    "id": 0,
-    "nome": "string",
-    "password": "string",
-    "telefone": "string",
-    "username": "string"
-  }
-] -->
