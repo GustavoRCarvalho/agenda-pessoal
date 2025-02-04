@@ -17,7 +17,7 @@ const props = defineProps({
 })
 const model = defineModel()
 
-const valid = ref(true) // Essa ref rastreia o estado atual do erro para alterar a classe do container do input
+const valid = ref(!props.errorMessage) // Essa ref rastreia o estado atual do erro para alterar a classe do container do input
 const isFocus = ref(props.needFocus)
 const inputRef = useTemplateRef('inputRef')
 
