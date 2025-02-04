@@ -9,6 +9,7 @@ import { onMounted } from 'vue'
 import { watch } from 'vue'
 import IconReload from '../icons/IconReload.vue'
 import { useAlertsStore } from '@/stores/alerts'
+import { debounce } from 'lodash'
 
 const AlertsStore = useAlertsStore()
 const { createAlertError, createAlertSucess } = AlertsStore
@@ -32,9 +33,17 @@ watch(people, (value) => {
   })
 })
 
+watch(
+  search,
+  debounce(async (searchValue) => {
+    await setPeople(searchValue)
+  }, 500),
+)
+
 async function handleReload() {
   try {
     await setPeople()
+    search.value = ''
     createAlertSucess('Lista de pessoas recarregada com sucesso.')
   } catch (e) {
     if (e.status === 404 || e?.response?.data?.message) {

@@ -8,6 +8,8 @@ import { onMounted } from 'vue'
 import { useListsStore } from '@/stores/lists'
 import IconReload from '../icons/IconReload.vue'
 import { useAlertsStore } from '@/stores/alerts'
+import { watch } from 'vue'
+import { debounce } from 'lodash'
 
 const AlertsStore = useAlertsStore()
 const { createAlertError, createAlertSucess } = AlertsStore
@@ -25,10 +27,18 @@ onMounted(() => {
   if (users.value?.length === 0) setUsers()
 })
 
+watch(
+  search,
+  debounce(async (searchValue) => {
+    await setUsers(searchValue)
+  }, 500),
+)
+
 async function handleReload() {
   try {
     await setUsers()
     createAlertSucess('Lista de usuários recarregada com sucesso.')
+    search.value = ''
   } catch (e) {
     if (e.status === 404 || e?.response?.data?.message) {
       createAlertError('Erro ao recarregar lista!')

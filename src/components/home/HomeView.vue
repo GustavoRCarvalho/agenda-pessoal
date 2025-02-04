@@ -9,6 +9,7 @@ import HomeList from './HomeList.vue'
 import { watch } from 'vue'
 import IconReload from '../icons/IconReload.vue'
 import { useAlertsStore } from '@/stores/alerts'
+import { debounce } from 'lodash'
 
 const AlertsStore = useAlertsStore()
 const { createAlertError, createAlertSucess } = AlertsStore
@@ -33,10 +34,18 @@ watch(contacts, (value) => {
   })
 })
 
+watch(
+  search,
+  debounce(async (searchValue) => {
+    await setContacts(searchValue)
+  }, 500),
+)
+
 async function handleReload() {
   try {
     await setContacts()
     await setFavs()
+    search.value = ''
     createAlertSucess('Lista de contatos e favoritos recarregada com sucesso.')
   } catch (e) {
     if (e.status === 404 || e?.response?.data?.message) {

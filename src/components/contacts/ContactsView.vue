@@ -8,6 +8,8 @@ import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import IconReload from '../icons/IconReload.vue'
 import { useAlertsStore } from '@/stores/alerts'
+import { watch } from 'vue'
+import { debounce } from 'lodash'
 
 const AlertsStore = useAlertsStore()
 const { createAlertError, createAlertSucess } = AlertsStore
@@ -25,9 +27,17 @@ onMounted(() => {
   if (contacts.value?.length === 0) setContacts()
 })
 
+watch(
+  search,
+  debounce(async (searchValue) => {
+    await setContacts(searchValue)
+  }, 500),
+)
+
 async function handleReload() {
   try {
     await setContacts()
+    search.value = ''
     createAlertSucess('Lista de contatos recarregada com sucesso.')
   } catch (e) {
     if (e.status === 404 || e?.response?.data?.message) {
