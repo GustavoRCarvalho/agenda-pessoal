@@ -23,7 +23,6 @@ export const useRegistersStore = defineStore('registers', {
   actions: {
     async changePeopleRegisterEdit(id) {
       const response = await peopleService.findPeople(id)
-      console.log(response?.data?.object)
       this.peopleRegisterEdit = response?.data?.object
     },
     changeContactRegisterEditNOGET(contact) {
@@ -69,7 +68,6 @@ export const useRegistersStore = defineStore('registers', {
           label: libTiposUser[infos.tipos],
         },
       }
-      console.log(this.userRegisterEdit)
     },
     resetPeopleRegisterEdit() {
       this.peopleRegisterEdit = peopleFormFields

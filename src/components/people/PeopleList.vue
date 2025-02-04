@@ -7,11 +7,13 @@ import { storeToRefs } from 'pinia'
 import IconEdit from '../icons/IconEdit.vue'
 import IconTrash from '../icons/IconTrash.vue'
 import { useAlertsStore } from '@/stores/alerts'
+import peopleService from '@/api/people'
 
 const AlertsStore = useAlertsStore()
 const { createAlertError, createAlertSucess } = AlertsStore
 
 const ListsStore = useListsStore()
+const { setPeople } = ListsStore
 const { people, photos } = storeToRefs(ListsStore)
 
 const RegisterStore = useRegistersStore()
@@ -31,9 +33,18 @@ async function handleClickEdit(id) {
   }
 }
 
-function handleDelete(id) {
+async function handleDelete(id) {
   if (id) {
-    console.log(id)
+    try {
+      await peopleService.deletePeople(id)
+      createAlertSucess('Sucesso ao excluir o contato.')
+      setPeople()
+    } catch (e) {
+      if (e.status === 404 || e?.response?.data?.message) {
+        createAlertError('Erro ao salvar o usuário!')
+      }
+      createAlertError(e?.response?.data?.message)
+    }
   }
 }
 </script>

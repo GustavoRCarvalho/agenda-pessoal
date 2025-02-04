@@ -61,13 +61,11 @@ async function handleSubmit(e) {
     await setUser(formValues.id)
     createAlertSucess('Sucesso ao atualizar!')
   } catch (e) {
-    console.error(e)
     if (e.status === 404) {
       createAlertError('Erro ao atualizar o usuário!')
     }
     createAlertError(e?.response?.data?.message)
   }
-  console.log(formValues)
 }
 </script>
 <template>

@@ -17,6 +17,7 @@ const AlertsStore = useAlertsStore()
 const { createAlertError, createAlertSucess } = AlertsStore
 
 const ListsStore = useListsStore()
+const { setPeople } = ListsStore
 const { photos } = storeToRefs(ListsStore)
 
 const ModalsStore = useModalsStore()
@@ -95,16 +96,18 @@ async function handleFile(e) {
   const file = e.target.files[0]
   if (!file || !['image/png', 'image/jpeg'].includes(file.type)) {
     // event Error
-    console.error('Imagens devem ser no formato .PNG ou .JPEG')
+    createAlertError('Imagens devem ser no formato .PNG ou .JPEG')
     return
   }
   formValues.foto.data = file
 
   try {
     formValues.foto.src = await transformImage(file)
-  } catch (error) {
-    // event Error
-    console.error('Erro ao processar a imagem:', error)
+  } catch (e) {
+    if (e.status === 404 || e?.response?.data?.message) {
+      createAlertError('Erro ao processar a imagem!')
+    }
+    createAlertError(e?.response?.data?.message)
   }
 }
 
@@ -115,12 +118,6 @@ async function handleSubmit(e) {
     return
   }
 
-  if (!formValues.id) {
-    formValues.id = generateUniqueId()
-  }
-  if (!formValues.endereco.id) {
-    formValues.endereco.id = generateUniqueId()
-  }
   if (formValues.foto?.data) {
     try {
       const response = await photoService.postPhoto(generateUniqueId(), formValues.foto.data)
@@ -130,18 +127,23 @@ async function handleSubmit(e) {
       formValues.foto.type = response.data.object.type
       createAlertSucess(`Sucesso ao fazer upload da foto.`)
     } catch (e) {
-      console.error(e)
-      createAlertError('Erro ao fazer upload da foto!')
+      if (e.status === 404 || e?.response?.data?.message) {
+        createAlertError('Erro ao fazer upload da foto!')
+      }
+      createAlertError(e?.response?.data?.message)
     }
   }
 
   try {
     await peopleService.postPeople(formValues)
     createAlertSucess(`Sucesso ao salvar a pessoa.`)
+    setPeople()
     peopleSwitch()
   } catch (e) {
-    console.error(e)
-    createAlertError(`Erro ao salvar a pessoa!`)
+    if (e.status === 404 || e?.response?.data?.message) {
+      createAlertError('Erro ao salvar a pessoa!')
+    }
+    createAlertError(e?.response?.data?.message)
   }
 }
 </script>

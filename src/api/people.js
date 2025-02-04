@@ -7,10 +7,8 @@ export default {
   postPeople(people) {
     const normalizeForm = {
       ...people,
-      id: Number(people.id),
       endereco: {
         ...people.endereco,
-        id: Number(people.endereco.id),
         numero: Number(people.endereco.numero),
       },
       foto: people?.foto?.id

@@ -16,8 +16,6 @@ export const useAuthStore = defineStore('auth', {
         password: credentials.password,
       })
 
-      console.log(response)
-
       const { accessToken, id, tipos } = response.data
 
       if (credentials.remember) {

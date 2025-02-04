@@ -24,7 +24,7 @@ const { contactSwitch } = ModalsStore
 const { contactModal } = storeToRefs(ModalsStore)
 
 const ListsStore = useListsStore()
-const { setPeople } = ListsStore
+const { setPeople, setContacts } = ListsStore
 const { people } = storeToRefs(ListsStore)
 
 const UserStore = useUserStore()
@@ -85,10 +85,13 @@ async function handleSubmit(e) {
   try {
     await contactsService.postContact(formValues)
     createAlertSucess('Sucesso ao salvar o contato.')
+    setContacts()
     contactSwitch()
   } catch (e) {
-    console.error(e)
-    createAlertError('Erro ao salvar o contato!')
+    if (e.status === 404 || e?.response?.data?.message) {
+      createAlertError('Erro ao salvar o contato!')
+    }
+    createAlertError(e?.response?.data?.message)
   }
 }
 </script>

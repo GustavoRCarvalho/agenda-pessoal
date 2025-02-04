@@ -88,13 +88,11 @@ async function handleSubmit(e) {
     createAlertSucess('Sucesso ao salvar o usuário.')
     passSwitch()
   } catch (e) {
-    console.error(e)
     if (e.status === 404 || e?.response?.data?.message) {
       createAlertError('Erro ao salvar o usuário!')
     }
     createAlertError(e?.response?.data?.message)
   }
-  console.log(formValues)
 }
 </script>
 <template>

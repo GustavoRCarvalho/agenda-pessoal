@@ -14,7 +14,6 @@ export default {
       },
     }
 
-    console.log(normalizeUser)
     return http.post('/usuario/salvar', normalizeUser)
   },
   changePassword(passwords) {

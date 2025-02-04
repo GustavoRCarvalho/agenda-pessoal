@@ -12,9 +12,13 @@ import InputSelect from '../inputs/InputSelect.vue'
 import { optionsTiposUser } from '@/utils/constants'
 import userService from '@/api/users'
 import { useAlertsStore } from '@/stores/alerts'
+import { useListsStore } from '@/stores/lists'
 
 const AlertsStore = useAlertsStore()
 const { createAlertError, createAlertSucess } = AlertsStore
+
+const ListsStore = useListsStore()
+const { setUsers } = ListsStore
 
 const ModalsStore = useModalsStore()
 const { userSwitch } = ModalsStore
@@ -96,9 +100,9 @@ async function handleSubmit(e) {
   try {
     await userService.postUser(formValues)
     createAlertSucess('Sucesso ao salvar o usuário.')
+    setUsers()
     userSwitch()
   } catch (e) {
-    console.error(e)
     if (e.status === 404 || e?.response?.data?.message) {
       createAlertError('Erro ao salvar o usuário!')
     }

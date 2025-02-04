@@ -17,7 +17,6 @@ http.interceptors.request.use((config) => {
 http.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.log(window.location.href)
     if (window.location.href.includes('/login')) {
       return Promise.reject(error)
     }

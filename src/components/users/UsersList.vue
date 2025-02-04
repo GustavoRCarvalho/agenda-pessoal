@@ -4,7 +4,6 @@ import { useModalsStore } from '@/stores/modals'
 import { useRegistersStore } from '@/stores/registers'
 import { storeToRefs } from 'pinia'
 import IconEdit from '../icons/IconEdit.vue'
-import IconTrash from '../icons/IconTrash.vue'
 import { useAlertsStore } from '@/stores/alerts'
 
 const AlertsStore = useAlertsStore()
@@ -29,11 +28,6 @@ async function handleClickEdit(id) {
     createAlertError(e?.message)
   }
 }
-function handleDelete(id) {
-  if (id) {
-    console.log(id)
-  }
-}
 </script>
 <template>
   <table class="list-table">
@@ -51,10 +45,7 @@ function handleDelete(id) {
         <td>
           <button class="tool-button edit-button" @click="handleClickEdit(user.id)">
             <span class="not-visible">Editar {{ user.username }}</span
-            ><IconEdit /></button
-          ><button class="tool-button delete-button" @click="handleDelete(user.id)">
-            <span class="not-visible">Deletar {{ user.username }}</span
-            ><IconTrash />
+            ><IconEdit />
           </button>
         </td>
       </tr>

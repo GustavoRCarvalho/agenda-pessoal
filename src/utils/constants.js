@@ -4,6 +4,7 @@ export const peopleFormFields = {
   cpf: '',
   foto: {},
   endereco: {
+    id: null,
     bairro: '',
     cep: '',
     cidade: '',

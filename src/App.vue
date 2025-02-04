@@ -12,7 +12,7 @@ import router from '@/router'
 import { useAlertsStore } from './stores/alerts'
 
 const AlertsStore = useAlertsStore()
-const { createAlertSucess, createAlertWarning } = AlertsStore
+const { createAlertSucess, createAlertError } = AlertsStore
 
 const UserStore = useUserStore()
 const { setUser, unsetUser } = UserStore
@@ -26,8 +26,10 @@ onMounted(async () => {
       await setUser(id.value)
       createAlertSucess('Dados carregados com sucesso!')
     } catch (e) {
-      console.error(e)
-      createAlertWarning('Não foi possível carregar os dados!')
+      if (e.status === 404 || e?.response?.data?.message) {
+        createAlertError('Não foi possível carregar os dados!')
+      }
+      createAlertError(e?.response?.data?.message)
     }
   }
 })
@@ -38,8 +40,10 @@ watch(id, async (newId) => {
       await setUser(newId)
       createAlertSucess('Dados carregados com sucesso!')
     } catch (e) {
-      console.error(e)
-      createAlertWarning('Não foi possível carregar os dados!')
+      if (e.status === 404 || e?.response?.data?.message) {
+        createAlertError('Não foi possível carregar os dados!')
+      }
+      createAlertError(e?.response?.data?.message)
     }
   } else {
     unsetUser()
@@ -53,8 +57,6 @@ watch(accessToken, (newToken) => {
 </script>
 
 <template>
-  <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
-
   <RouterNavigation> <RouterView /></RouterNavigation>
   <ModalsController />
   <AlertController />
