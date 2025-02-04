@@ -55,16 +55,8 @@ watch(accessToken, (newToken) => {
   }
 })
 </script>
-
 <template>
   <RouterNavigation> <RouterView /></RouterNavigation>
   <ModalsController />
   <AlertController />
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-</style>
