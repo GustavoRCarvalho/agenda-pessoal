@@ -52,7 +52,7 @@ pnpm install
 
 ### Crie as variaveis de ambiente
 
-crie **/.env**
+crie **/.env.local**
 
 adicione **VITE_API_BASE_URL='https...'**
 
