@@ -52,8 +52,9 @@ pnpm install
 
 ### Crie as variaveis de ambiente
 
-crie /.env
-adicione VITE_API_BASE_URL='https...'
+crie **/.env**
+
+adicione **VITE_API_BASE_URL='https...'**
 
 ### Compila e ativa o hot-reload para desenvolvimento
 
