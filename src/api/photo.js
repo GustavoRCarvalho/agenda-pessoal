@@ -7,6 +7,6 @@ export default {
     })
   },
   postPhoto(id, photo) {
-    return http.post(`/foto/upload/${id}`, photo)
+    return http.post(`/foto/upload/${id}`, { foto: photo })
   },
 }
