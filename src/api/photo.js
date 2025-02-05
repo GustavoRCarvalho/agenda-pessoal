@@ -7,6 +7,13 @@ export default {
     })
   },
   postPhoto(id, photo) {
-    return http.post(`/foto/upload/${id}`, { foto: photo })
+    const formData = new FormData()
+    formData.append('foto', photo)
+
+    return http.post(`/foto/upload/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
   },
 }
