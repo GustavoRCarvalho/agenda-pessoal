@@ -10,9 +10,7 @@ Do mais, espero que o código esteja satisfatório e desejo boa exploração e l
 
 #### testes
 
-Os testes não cobrem 100% da aplicação, apenas 100% dos inputs, a documentação de algumas bibliotecas que usei em relação a testes deixavam a desejar então não quis perder tanto tempo com isso, ainda sim apliquei testes variados nos inputs para ao menos demonstrar que posso desenvolver assim.
-
-Ainda falando de testes, não produzi usando TDD, pois não quis gastar o precioso tempo planejando além de entender cada etapa da funcionalidade, além de entender as particularidades das requisições e retornos da api. Em um caso mais controlado em que funcionalidades e padrões são introduzidos com mais calma eu adoraria desenvolver utilizando TDD, apenas achei que não era o momento nem o projeto para isto.
+Ainda falando de testes, não produzi usando TDD, pois não quis gastar o precioso tempo planejando, além de entender cada etapa da funcionalidade e as particularidades das requisições e retornos da api. Em um caso mais controlado em que funcionalidades e padrões são introduzidos com mais calma eu adoraria desenvolver utilizando TDD, apenas achei que não era o momento nem o projeto para isto.
 
 #### IA
 
