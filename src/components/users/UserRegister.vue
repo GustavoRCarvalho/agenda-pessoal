@@ -33,11 +33,14 @@ const formErrors = reactive({})
 
 // Limpa o erro caso quando o campo é alterado
 // OBS: preferencialmente deve haver um watch para cada campo com verificação customizada
-watch(formValues, () => {
-  if (formErrors.cpf) {
-    formErrors.cpf = null
-  }
-})
+watch(
+  () => formValues.cpf,
+  () => {
+    if (formErrors.cpf) {
+      formErrors.cpf = null
+    }
+  },
+)
 watch(
   () => formValues.password,
   () => {
