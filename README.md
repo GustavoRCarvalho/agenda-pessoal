@@ -14,7 +14,7 @@ Ainda falando de testes, não produzi usando TDD, pois não quis gastar o precio
 
 #### IA
 
-Hoje este é um tópico sensível, então serei direto, não utilizei qualquer IA para gerar qualquer parte deste código, quando a código copiado de algum lugar (acredito que apenas dentro do arquivo ./utils/functions.js) *está explicitamente comentado de onde o código veio*.
+Hoje este é um tópico sensível, então serei direto, não utilizei qualquer IA para gerar qualquer parte deste código, quando há código copiado de algum lugar (acredito que apenas dentro do arquivo ./utils/functions.js) *está explicitamente comentado de onde o código veio*.
 
 ## Bibliotecas
 
