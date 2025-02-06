@@ -10,6 +10,7 @@ export default {
       endereco: {
         ...people.endereco,
         numero: Number(people.endereco.numero),
+        pais: people.endereco.paisOption.key,
       },
       foto: people?.foto?.id
         ? {

@@ -21,12 +21,12 @@ const model = defineModel()
 
 <style scoped>
 .input-wrapper {
+  width: 100%;
   position: relative;
 
   margin-block: 0.6em;
 }
 div {
-  flex-grow: 1;
   max-width: 14.7em;
 
   @media (max-width: 720px) {

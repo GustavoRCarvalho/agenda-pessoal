@@ -12,6 +12,8 @@ import { useListsStore } from '@/stores/lists'
 import { useAlertsStore } from '@/stores/alerts'
 import photoService from '@/api/photo'
 import peopleService from '@/api/people'
+import InputSelect from '../inputs/InputSelect.vue'
+import { optionsCountries } from '@/utils/constants'
 
 const AlertsStore = useAlertsStore()
 const { createAlertError, createAlertSucess } = AlertsStore
@@ -71,7 +73,9 @@ watch(
     const newValues = await verifyCEP(cep)
 
     if (!newValues?.erro) {
-      formValues.endereco.pais = formValues.endereco.pais || 'BR'
+      formValues.endereco.paisOption = formValues.endereco.paisOption.key
+        ? formValues.endereco.paisOption
+        : { key: 'BR', label: 'Brasil' }
       formValues.endereco.estado = formValues.endereco.estado || newValues.estado
       formValues.endereco.cidade = formValues.endereco.cidade || newValues.localidade
       formValues.endereco.bairro = formValues.endereco.bairro || newValues.bairro
@@ -188,12 +192,11 @@ async function handleSubmit(e) {
               mask="#####-###"
               placeholder="00000-000"
             />
-            <InputDefault
-              v-model="formValues.endereco.pais"
-              type="text"
+            <InputSelect
+              :options="optionsCountries"
+              v-model="formValues.endereco.paisOption"
               label="País"
               name="pais"
-              placeholder="País"
             />
             <InputDefault
               v-model="formValues.endereco.estado"
