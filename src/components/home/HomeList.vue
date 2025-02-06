@@ -67,7 +67,7 @@ async function handleFav(contact) {
   } else {
     try {
       await favsService.deleteFavs(contact.id)
-      favs.value[contact.id] = null
+      delete favs.value[contact.id]
       createAlertSucess('Sucesso ao remover favorito.')
     } catch (e) {
       if (e.status === 404 || e?.response?.data?.message) {

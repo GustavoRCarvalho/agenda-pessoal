@@ -24,10 +24,11 @@ export const useListsStore = defineStore('lists', {
       this.people = response.data
     },
     async setFavs() {
+      // funciona como uma hash list e garante O(1) para busca
       const response = await favsService.listFavs()
 
       response?.data?.forEach((contact) => {
-        this.favs[contact?.id] = contact
+        this.favs[contact?.id] = true
       })
     },
     async setUsers(search = '') {
