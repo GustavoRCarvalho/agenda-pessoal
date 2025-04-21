@@ -44,7 +44,9 @@ Icons são da [radix-ui](https://www.radix-ui.com/icons)
 
 ```sh
 npm install
-OR
+```
+OU
+```sh
 pnpm install
 ```
 
